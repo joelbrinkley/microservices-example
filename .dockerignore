@@ -1,0 +1,15 @@
+.dockerignore
+.git
+.gitignore
+.vs
+.vscode
+docker-compose*.yml
+*.sln
+*.md
+k8s
+servicefabric
+**/bin/
+**/obj/
+**/node_modules/
+**/bower_components/
+**/wwwroot/

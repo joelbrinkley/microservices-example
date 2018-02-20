@@ -1,0 +1,33 @@
+FROM microsoft/aspnetcore-build:2 as builder
+
+WORKDIR /src/common/Domain
+COPY /src/common/Domain/Domain.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Core
+COPY /src/services/account/Account.Core/Account.Core.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Data
+COPY /src/services/account/Account.Data/Account.Data.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Api
+COPY /src/services/account/Account.Api/Account.Api.csproj .
+RUN dotnet restore
+
+COPY /src/common/Domain/ /src/common/Domain/
+COPY /src/services/account/Account.Core/ /src/services/account/Account.Core/
+COPY /src/services/account/Account.Data/ /src/services/account/Account.Data/
+COPY /src/services/account/Account.Api/ /src/services/account/Account.Api/
+
+WORKDIR /src/services/account/Account.Api
+RUN dotnet publish -c Release -o /build 
+
+FROM microsoft/aspnetcore:2.0
+
+WORKDIR /app
+
+COPY --from=builder /build .
+
+ENTRYPOINT [ "dotnet", "Account.Api.dll" ]
