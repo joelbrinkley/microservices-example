@@ -22,7 +22,7 @@ namespace Account.Autofac
 
             builder.Register(c => new MongoClient(mongoDbConnection)).SingleInstance(); //thread safe connection
 
-            builder.RegisterType<IBankAccountRepository>().As<BankAccountRepository>();
+            builder.RegisterType<BankAccountRepository>().As<IBankAccountRepository>();
             
         }
     }

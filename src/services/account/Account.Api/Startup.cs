@@ -32,6 +32,8 @@ namespace Account.Api
         {
             var mongoConnectionString = this.Configuration.GetSection("MongoConnection")["ConnectionString"];
             builder.RegisterModule(new RepositoryModule(mongoConnectionString));
+            builder.RegisterModule(new CommandHandlerModule());
+            builder.RegisterModule(new LoggingModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

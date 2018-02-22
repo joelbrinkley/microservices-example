@@ -17,7 +17,7 @@ namespace Account
         private readonly ICommandHandler<WithdrawFromBankAccount> withdrawHandler;
         private readonly ICommandHandler<DepositMoneyIntoAccount> depositHandler;
 
-        public AccountController(IBankAccountRepository bankAccountRepository, 
+        public AccountController(IBankAccountRepository bankAccountRepository,
             ICommandHandler<CreateAccount> createAccountHandler,
             ICommandHandler<WithdrawFromBankAccount> withdrawHandler,
             ICommandHandler<DepositMoneyIntoAccount> depositHandler)

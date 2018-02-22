@@ -15,6 +15,10 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
+    <PackageReference Include="Serilog" Version="2.6.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="2.5.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +30,7 @@
     <ProjectReference Include="..\Account.Application\Account.Application.csproj" />
     <ProjectReference Include="..\Account.Core\Account.Core.csproj" />
     <ProjectReference Include="..\Account.Data\Account.Data.csproj" />
+    <ProjectReference Include="..\Account.Logging\Account.Logging.csproj" />
   </ItemGroup>
 
 </Project>

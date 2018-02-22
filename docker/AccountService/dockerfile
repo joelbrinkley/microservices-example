@@ -8,8 +8,16 @@ WORKDIR /src/services/account/Account.Core
 COPY /src/services/account/Account.Core/Account.Core.csproj .
 RUN dotnet restore
 
+WORKDIR /src/services/account/Account.Logging
+COPY /src/services/account/Account.Logging/Account.Logging.csproj .
+RUN dotnet restore
+
 WORKDIR /src/services/account/Account.Data
 COPY /src/services/account/Account.Data/Account.Data.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Application
+COPY /src/services/account/Account.Application/Account.Application.csproj .
 RUN dotnet restore
 
 WORKDIR /src/services/account/Account.Api
@@ -18,7 +26,9 @@ RUN dotnet restore
 
 COPY /src/common/Domain/ /src/common/Domain/
 COPY /src/services/account/Account.Core/ /src/services/account/Account.Core/
+COPY /src/services/account/Account.Logging/ /src/services/account/Account.Logging/
 COPY /src/services/account/Account.Data/ /src/services/account/Account.Data/
+COPY /src/services/account/Account.Application/ /src/services/account/Account.Application/
 COPY /src/services/account/Account.Api/ /src/services/account/Account.Api/
 
 WORKDIR /src/services/account/Account.Api

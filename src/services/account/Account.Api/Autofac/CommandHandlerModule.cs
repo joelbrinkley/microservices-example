@@ -8,9 +8,9 @@ namespace Account.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ICommandHandler<WithdrawFromBankAccount>>().As<WithdrawFromAccountHandler>();
-            builder.RegisterType<ICommandHandler<CreateAccount>>().As<CreateAccountHandler>();
-            builder.RegisterType<ICommandHandler<DepositMoneyIntoAccount>>().As<DepositMoneyIntoAccount>();
+            builder.RegisterType<WithdrawFromAccountHandler>().As<ICommandHandler<WithdrawFromBankAccount>>();
+            builder.RegisterType<CreateAccountHandler>().As<ICommandHandler<CreateAccount>>();
+            builder.RegisterType<DepositIntoAccountHandler>().As<ICommandHandler<DepositMoneyIntoAccount>>();
         }
     }
 }

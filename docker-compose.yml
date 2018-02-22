@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  microservice-example-mongo:
+    image: mongo
+    container_name: microservice-example-mongo
+  account-service:
+    image: microexample/accountservice:v1
+    container_name: account-service
+  customer-service:
+    image: microexample/customerservice:v1
+    container_name: customer-service
+  microservice-example-queue: 
+    image: nats:linux
+    container_name: microservice-example-mq
+    

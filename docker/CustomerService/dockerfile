@@ -1,0 +1,18 @@
+FROM microsoft/aspnetcore-build:2 as builder
+
+WORKDIR /src/services/customer/Customer.Api
+COPY /src/services/customer/Customer.Api/Customer.Api.csproj .
+RUN dotnet restore
+
+COPY /src/services/customer/Customer.Api/ /src/services/customer/Customer.Api/
+
+WORKDIR /src/services/customer/Customer.Api
+RUN dotnet publish -c Release -o /build 
+
+FROM microsoft/aspnetcore:2.0
+
+WORKDIR /app
+
+COPY --from=builder /build .
+
+ENTRYPOINT [ "dotnet", "Customer.Api.dll" ]

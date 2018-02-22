@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  microservice-example-mongo:
+    ports:
+      - "27017:27017"
+  account-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7887:80"
+    depends_on:
+      - microservice-example-mongo
+  customer-service:
+    environment:
+     - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+     - "7888:80"
+    depends_on:
+     - microservice-example-mongo
