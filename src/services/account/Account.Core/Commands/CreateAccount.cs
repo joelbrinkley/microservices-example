@@ -8,7 +8,7 @@ namespace Account.Commands
 {
     public class CreateAccount : ICommand
     {
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public decimal StartingBalance { get; set; }
     }
 }

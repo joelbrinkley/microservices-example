@@ -9,9 +9,22 @@ namespace Customers.Commands
 {
     public class CreateCustomerCommandHandler : ICommandHandler<CreateCustomerCommand>
     {
-        public Task Handle(CreateCustomerCommand command)
+        private readonly ICustomerRepository customerRepository;
+
+        public CreateCustomerCommandHandler(ICustomerRepository customerRepository)
         {
-            throw new NotImplementedException();
+            this.customerRepository = customerRepository;
+        }
+
+        public async Task Handle(CreateCustomerCommand command)
+        {
+            var name = new Name(command.FirstName, command.MiddleName ?? "", command.LastName);
+            var address = new Address(command.AddressLine1, command.AddressLine2, command.City, command.State, command.ZipCode);
+            EmailAddress emailAddress = command.EmailAddress;
+
+            var newCustomer = Customer.Create(name, address, emailAddress);
+
+            await customerRepository.AddOrUpdate(newCustomer);
         }
     }
 }

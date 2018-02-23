@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Account.Proxies\Account.Proxies.csproj" />
     <ProjectReference Include="..\..\..\common\Domain\Domain.csproj" />
     <ProjectReference Include="..\Account.Application\Account.Application.csproj" />
     <ProjectReference Include="..\Account.Core\Account.Core.csproj" />

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Domain
+namespace Domain.Queries
 {
     public interface IQueryHandler<TQuery, TResult> where TQuery: IQuery
     {
-        TResult Execute(TQuery query);
+        Task<TResult> Execute(TQuery query);
     }
 }

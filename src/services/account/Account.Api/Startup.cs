@@ -31,8 +31,9 @@ namespace Account.Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             var mongoConnectionString = this.Configuration.GetSection("MongoConnection")["ConnectionString"];
-            builder.RegisterModule(new RepositoryModule(mongoConnectionString));
-            builder.RegisterModule(new CommandHandlerModule());
+            var customerServiceBaseUrl = this.Configuration.GetSection("ServiceUrls")["CustomerService"];
+            builder.RegisterModule(new RepositoryModule(mongoConnectionString, customerServiceBaseUrl));
+            builder.RegisterModule(new ApplicationModule());
             builder.RegisterModule(new LoggingModule());
         }
 

@@ -10,7 +10,7 @@ namespace Account.UnitTests
     [TestClass]
     public class Account_Should
     {
-        public int customerId = 1;
+        public Guid customerId = Guid.NewGuid();
 
         [TestMethod]
         public void DeclareInsufficentFunds()
@@ -37,7 +37,7 @@ namespace Account.UnitTests
         {
             var account = BankAccount.CreateAccount(customerId, 500);
 
-            Assert.AreEqual(1, account.CustomerId);
+            Assert.AreEqual(this.customerId, account.CustomerId);
             Assert.AreEqual(500, account.Balance);
             Assert.IsNotNull(account.Id);
         }

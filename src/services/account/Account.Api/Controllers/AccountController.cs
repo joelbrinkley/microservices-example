@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Account.Commands;
+using Account.Queries;
 using Domain.Commands;
+using Domain.Queries;
 
 namespace Account
 {
@@ -12,26 +14,28 @@ namespace Account
     [Route("api/accounts")]
     public class AccountController : Controller
     {
-        private IBankAccountRepository bankAccountRepository;
+        private readonly IQueryHandler<FindAccountQuery, BankAccount> findAccountQueryHandler;
         private readonly ICommandHandler<CreateAccount> createAccountHandler;
         private readonly ICommandHandler<WithdrawFromBankAccount> withdrawHandler;
         private readonly ICommandHandler<DepositMoneyIntoAccount> depositHandler;
 
-        public AccountController(IBankAccountRepository bankAccountRepository,
-            ICommandHandler<CreateAccount> createAccountHandler,
-            ICommandHandler<WithdrawFromBankAccount> withdrawHandler,
-            ICommandHandler<DepositMoneyIntoAccount> depositHandler)
-        {
-            this.bankAccountRepository = bankAccountRepository;
-            this.createAccountHandler = createAccountHandler;
-            this.withdrawHandler = withdrawHandler;
-            this.depositHandler = depositHandler;
-        }
+        public AccountController(IQueryHandler<FindAccountQuery, BankAccount> findAccountQueryHandler,
+                                 ICommandHandler<CreateAccount> createAccountHandler,
+                                 ICommandHandler<WithdrawFromBankAccount> withdrawHandler,
+                                 ICommandHandler<DepositMoneyIntoAccount> depositHandler)
+                            {
+                                this.findAccountQueryHandler = findAccountQueryHandler;
+                                this.createAccountHandler = createAccountHandler;
+                                this.withdrawHandler = withdrawHandler;
+                                this.depositHandler = depositHandler;
+                            }
 
         [HttpGet, Route("{id}")]
         public async Task<IActionResult> GetBankAccount(Guid id)
         {
-            var bankAccount = await this.bankAccountRepository.Find(id);
+            var query = new FindAccountQuery() { Id = id };
+
+            var bankAccount = await this.findAccountQueryHandler.Execute(query);
 
             return Ok(bankAccount);
         }

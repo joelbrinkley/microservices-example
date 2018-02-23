@@ -9,7 +9,7 @@ namespace Account.Events
     {
         public const string EVENT_NAMESPACE = "Account.Created";
 
-        public AccountCreated(Guid bankAccountId, int customerId, decimal amount)
+        public AccountCreated(Guid bankAccountId, Guid customerId, decimal amount)
             : base(bankAccountId.ToString(), EVENT_NAMESPACE)
         {
             StartingBalance = amount;
@@ -18,6 +18,6 @@ namespace Account.Events
 
 
         public decimal StartingBalance { get; }
-        public int CustomerId { get; }
+        public Guid CustomerId { get; }
     }
 }

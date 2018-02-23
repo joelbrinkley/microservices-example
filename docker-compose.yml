@@ -12,4 +12,10 @@ services:
   microservice-example-queue: 
     image: nats:linux
     container_name: microservice-example-mq
+  account-client:
+    image: microexample/account-client:v1
+    container_name: account-client
+  microservice-example-proxy:
+    image: microexample/reverseproxy
+    container_name: microservice-example-proxy
     

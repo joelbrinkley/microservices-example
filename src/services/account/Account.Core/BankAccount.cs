@@ -7,7 +7,7 @@ namespace Account
     public class BankAccount : Aggregate<BankAccount>
     {
         public Guid Id { get; set; }
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         public decimal Balance { get; private set; }
 
         public BankAccount()
@@ -32,7 +32,7 @@ namespace Account
             this.Apply(new MoneyDeposited(this.Id, amount));
         }
 
-        public static BankAccount CreateAccount(int customerId, decimal amount)
+        public static BankAccount CreateAccount(Guid customerId, decimal amount)
         {
 
             var account = new BankAccount();

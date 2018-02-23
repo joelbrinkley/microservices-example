@@ -1,5 +1,9 @@
 version: '3.3'
 services:
+  microservice-example-proxy:
+    ports:
+      - "9885:80"
+      - "9887:433"
   microservice-example-mongo:
     ports:
       - "27017:27017"
@@ -17,3 +21,4 @@ services:
      - "7888:80"
     depends_on:
      - microservice-example-mongo
+  

@@ -1,9 +1,34 @@
 FROM microsoft/aspnetcore-build:2 as builder
 
+WORKDIR /src/common/Domain
+COPY /src/common/Domain/Domain.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/customer/Customer.Core
+COPY /src/services/customer/Customer.Core/Customer.Core.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/customer/Customer.Logging
+COPY /src/services/customer/Customer.Logging/Customer.Logging.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/customer/Customer.Data
+COPY /src/services/customer/Customer.Data/Customer.Data.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/customer/Customer.Application
+COPY /src/services/customer/Customer.Application/Customer.Application.csproj .
+RUN dotnet restore
+
 WORKDIR /src/services/customer/Customer.Api
 COPY /src/services/customer/Customer.Api/Customer.Api.csproj .
 RUN dotnet restore
 
+COPY /src/common/Domain/ /src/common/Domain/
+COPY /src/services/customer/Customer.Core/ /src/services/customer/Customer.Core/
+COPY /src/services/customer/Customer.Logging/ /src/services/customer/Customer.Logging/
+COPY /src/services/customer/Customer.Data/ /src/services/customer/Customer.Data/
+COPY /src/services/customer/Customer.Application/ /src/services/customer/Customer.Application/
 COPY /src/services/customer/Customer.Api/ /src/services/customer/Customer.Api/
 
 WORKDIR /src/services/customer/Customer.Api

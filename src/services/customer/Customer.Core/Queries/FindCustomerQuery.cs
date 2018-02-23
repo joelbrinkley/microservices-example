@@ -1,12 +1,11 @@
-﻿using Domain;
-using Domain.Queries;
+﻿using Domain.Queries;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Account.Queries
+namespace Customers.Queries
 {
-    public class FindAccountQuery : IQuery
+    public class FindCustomerQuery : IQuery
     {
         public Guid Id { get; set; }
     }

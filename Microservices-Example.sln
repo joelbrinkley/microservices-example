@@ -47,15 +47,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Account.Logging", "src\serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.Api", "src\services\customer\Customer.Api\Customer.Api.csproj", "{6C124076-C552-4FB4-A3DA-0703F08C97EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Core", "src\services\customer\Customer.Core\Customer.Core.csproj", "{93D2813B-B8B5-4A8B-886D-82807EED80DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.Core", "src\services\customer\Customer.Core\Customer.Core.csproj", "{93D2813B-B8B5-4A8B-886D-82807EED80DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Data", "src\services\customer\Customer.Data\Customer.Data.csproj", "{750FBCEE-F542-4677-B87A-BD085ABA67BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.Data", "src\services\customer\Customer.Data\Customer.Data.csproj", "{750FBCEE-F542-4677-B87A-BD085ABA67BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Logging", "src\services\customer\Customer.Logging\Customer.Logging.csproj", "{A0BECE0E-9579-46BA-B279-201EE9F1BD58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.Logging", "src\services\customer\Customer.Logging\Customer.Logging.csproj", "{A0BECE0E-9579-46BA-B279-201EE9F1BD58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.UnitTests", "src\services\customer\Customer.UnitTests\Customer.UnitTests.csproj", "{20D9378A-28F5-4CB5-8D35-19F097CB02FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.UnitTests", "src\services\customer\Customer.UnitTests\Customer.UnitTests.csproj", "{20D9378A-28F5-4CB5-8D35-19F097CB02FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Application", "src\services\customer\Customer.Application\Customer.Application.csproj", "{68D74F5D-FAD4-4287-9C96-A55A82BD1C67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.Application", "src\services\customer\Customer.Application\Customer.Application.csproj", "{68D74F5D-FAD4-4287-9C96-A55A82BD1C67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Account.Proxies", "src\services\account\Account.Proxies\Account.Proxies.csproj", "{FB899234-F87B-4C77-B2D5-A13102CF4520}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -123,6 +125,10 @@ Global
 		{68D74F5D-FAD4-4287-9C96-A55A82BD1C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68D74F5D-FAD4-4287-9C96-A55A82BD1C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68D74F5D-FAD4-4287-9C96-A55A82BD1C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB899234-F87B-4C77-B2D5-A13102CF4520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB899234-F87B-4C77-B2D5-A13102CF4520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB899234-F87B-4C77-B2D5-A13102CF4520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB899234-F87B-4C77-B2D5-A13102CF4520}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,6 +154,7 @@ Global
 		{A0BECE0E-9579-46BA-B279-201EE9F1BD58} = {685A6ECF-EE73-4CC9-AE18-F405F33FDAFF}
 		{20D9378A-28F5-4CB5-8D35-19F097CB02FD} = {685A6ECF-EE73-4CC9-AE18-F405F33FDAFF}
 		{68D74F5D-FAD4-4287-9C96-A55A82BD1C67} = {685A6ECF-EE73-4CC9-AE18-F405F33FDAFF}
+		{FB899234-F87B-4C77-B2D5-A13102CF4520} = {3A0D47BE-9A96-4267-B9F9-93C51842B06F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA1CCAB7-CB0A-4B98-AEC7-EAF1C3506673}

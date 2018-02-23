@@ -1,4 +1,6 @@
-﻿using Account.Logging;
+﻿using Account.Customers;
+using Account.Exceptions;
+using Account.Logging;
 using Domain;
 using Domain.Commands;
 using System;
@@ -11,11 +13,13 @@ namespace Account.Commands
     public class CreateAccountHandler : ICommandHandler<CreateAccount>
     {
         private readonly IBankAccountRepository bankAccountRepository;
+        private readonly ICustomerRepository customerRepository;
         private readonly ILog log;
 
-        public CreateAccountHandler(IBankAccountRepository bankAccountRepository, ILog log)
+        public CreateAccountHandler(IBankAccountRepository bankAccountRepository, ICustomerRepository customerRepository, ILog log)
         {
             this.bankAccountRepository = bankAccountRepository;
+            this.customerRepository = customerRepository;
             this.log = log;
         }
 
@@ -23,7 +27,13 @@ namespace Account.Commands
         {
             this.log.Information($"Handling create command for customer {command.CustomerId}");
 
-            var newAccount = BankAccount.CreateAccount(command.CustomerId, command.StartingBalance);
+            var customer = await customerRepository.Find(command.CustomerId);
+
+            if (customer == null) throw new CustomerNotFoundException(command.CustomerId);
+
+            var startingBalance = CustomerBenefits.CalculateOpeningAccountBalance(customer, command.StartingBalance);
+
+            var newAccount = BankAccount.CreateAccount(command.CustomerId, startingBalance);
 
             await bankAccountRepository.AddOrUpdate(newAccount);
 

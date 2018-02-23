@@ -8,4 +8,12 @@ services:
     build:
       context: ./
       dockerfile: ./docker/CustomerService/dockerfile
+  microservice-example-proxy:
+    build:
+      context: ./
+      dockerfile: ./docker/Nginx/dockerfile
+  account-client:
+    build:
+      context: ./
+      dockerfile: ./docker/AccountClient/dockerfile
       

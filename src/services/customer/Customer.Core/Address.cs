@@ -20,5 +20,6 @@ namespace Customers
         public string City { get; }
         public string State { get; }
         public string Zipcode { get; }
+
     }
 }

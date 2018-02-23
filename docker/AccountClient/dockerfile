@@ -1,0 +1,30 @@
+FROM node as builder
+
+#WORK AROUND FOR INSTALL ANGULAR CLI https://github.com/nodejs/node-gyp/issues/1236#issuecomment-309447800
+USER node
+RUN mkdir /home/node/.npm-global
+ENV PATH=/home/node/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+
+RUN npm install @angular/cli -g
+
+USER root
+RUN mkdir ng-app
+
+WORKDIR /ng-app
+
+RUN chown -R node:node /ng-app
+RUN chmod 777 /ng-app
+
+USER node
+COPY /src/client/AngularClient/AccountApp/package.json .
+
+RUN npm update && npm set progress=false && npm install
+
+COPY /src/client/AngularClient/AccountApp/ .
+
+RUN ng build --prod
+
+EXPOSE 3000
+
+ENTRYPOINT node server.js

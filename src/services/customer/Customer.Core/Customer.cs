@@ -9,14 +9,15 @@ namespace Customers
         public Guid Id { get; set; }
         public Name Name { get; set; }
         public Address Address { get; set; }
-        public EmailAddress EmailAddress { get; set; }
+        public EmailAddress EmailAddress { get;  set; }
+        public bool IsPreferredCustomer { get;  set; }
 
         public Customer()
         {
 
         }      
 
-        public static Customer Create(Name name, Address address, EmailAddress email)
+        public static Customer Create(Name name, Address address, EmailAddress email, bool isPreferredCustomer = false)
         {
             
             var customer = new Customer()
@@ -24,7 +25,8 @@ namespace Customers
                 Id = Guid.NewGuid(),
                 Name = name,
                 Address = address,
-                EmailAddress = email
+                EmailAddress = email,
+                IsPreferredCustomer = isPreferredCustomer
             };
 
             customer.AddEvent(new NewCustomerCreated(customer));
