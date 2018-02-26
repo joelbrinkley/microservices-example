@@ -3,6 +3,9 @@ services:
   microservice-example-mongo:
     image: mongo
     container_name: microservice-example-mongo
+  microservice-example-sql:
+    image: microsoft/mssql-server-linux
+    container_name: microservice-example-sql
   account-service:
     image: microexample/accountservice:v1
     container_name: account-service

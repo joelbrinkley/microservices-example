@@ -1,0 +1,24 @@
+<div class="container">
+    <div *ngIf="accounts.length > 0">
+        <div>
+            <p-listbox [options]="accounts" [(ngModel)]="selectedAccount" [style]="{'width':'190px'}">
+                <p-header>
+                    Bank Accounts
+                </p-header>
+                <ng-template let-account let-i="index" pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                        <div>
+                            {{account.id}}
+                        </div>
+                        <div>
+                            {{account.balance}}
+                        </div>
+                    </div>
+                </ng-template>
+            </p-listbox>
+        </div>
+    </div>
+    <div>
+        There are no accounts.
+    </div>
+</div>
