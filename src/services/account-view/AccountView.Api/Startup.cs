@@ -35,6 +35,7 @@ namespace AccountView.Api
             services.AddMvc();
 
             services.AddTransient<IQueryHandler<GetAllAccountsQuery, IEnumerable<AccountViewModel>>, GetAllAccountsQueryHandler>();
+            services.AddTransient<IQueryHandler<FindAccountQuery, AccountViewModel>, FindAccountQueryHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +47,12 @@ namespace AccountView.Api
             }
 
             app.UseMvc();
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<AccountViewContext>();
+                context.Database.EnsureCreated();
+            }
         }
     }
 }

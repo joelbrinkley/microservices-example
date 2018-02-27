@@ -6,7 +6,7 @@ namespace Customers
 {
     public class Customer : Aggregate<Customer>
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public Name Name { get; set; }
         public Address Address { get; set; }
         public EmailAddress EmailAddress { get;  set; }
@@ -19,10 +19,9 @@ namespace Customers
 
         public static Customer Create(Name name, Address address, EmailAddress email, bool isPreferredCustomer = false)
         {
-            
             var customer = new Customer()
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 Name = name,
                 Address = address,
                 EmailAddress = email,

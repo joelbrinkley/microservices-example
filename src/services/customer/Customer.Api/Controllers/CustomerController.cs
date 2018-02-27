@@ -15,10 +15,10 @@ namespace Customers.Api.Controllers
     [Route("api/customers")]
     public class CustomerController : Controller
     {
-        private readonly ICommandHandler<CreateCustomerCommand> createCustomerHandler;
+        private readonly ICommandHandler<CreateCustomer> createCustomerHandler;
         private readonly IQueryHandler<FindCustomerQuery, Customer> findCustomerQueryHandler;
 
-        public CustomerController(ICommandHandler<CreateCustomerCommand> createCustomerHandler,
+        public CustomerController(ICommandHandler<CreateCustomer> createCustomerHandler,
                                   IQueryHandler<FindCustomerQuery, Customer> findCustomerQueryHandler)
         {
             this.createCustomerHandler = createCustomerHandler;
@@ -26,7 +26,7 @@ namespace Customers.Api.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(string id)
         {
             var customer = await this.findCustomerQueryHandler.Execute(new FindCustomerQuery() { Id = id });
 
@@ -34,7 +34,7 @@ namespace Customers.Api.Controllers
         }
 
         [Route(""), HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateCustomerCommand createCustomerCommand)
+        public async Task<IActionResult> Post([FromBody] CreateCustomer createCustomerCommand)
         {
             await this.createCustomerHandler.Handle(createCustomerCommand);
             return NoContent();

@@ -7,6 +7,6 @@ namespace Customers.Queries
 {
     public class FindCustomerQuery : IQuery
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

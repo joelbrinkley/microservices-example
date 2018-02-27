@@ -7,7 +7,7 @@ namespace Customers
 {
     public interface ICustomerRepository
     {
-        Task<Customer> Find(Guid id);
+        Task<Customer> Find(string id);
         Task AddOrUpdate(Customer customer);
         
     }

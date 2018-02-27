@@ -32,6 +32,9 @@ namespace Customers
             return emailAddress.Value;
         }
 
-
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
     }
 }

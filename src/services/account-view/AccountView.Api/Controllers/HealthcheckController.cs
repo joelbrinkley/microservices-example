@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccountMgmtView.Controllers
 {
-    [Route("api/healthcheck")]
+    [Route("api/accounts/healthcheck")]
     public class HealthcheckController : Controller
     {
         public HealthcheckController()
@@ -17,7 +17,7 @@ namespace AccountMgmtView.Controllers
         [HttpGet]
         public async Task<IActionResult> HealthCheck()
         {
-            return Ok(new { status = "success", message = "Account Management View Service up and running..." });
+            return Ok(new { status = "success", message = "Account View Service up and running..." });
         }
     }
 }

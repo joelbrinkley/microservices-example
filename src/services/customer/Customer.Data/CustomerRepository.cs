@@ -1,5 +1,6 @@
 ﻿using Customers.Logging;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using System;
 using System.Linq;
@@ -28,12 +29,13 @@ namespace Customers
         public async Task AddOrUpdate(Customer customer)
         {
             var filter = Builders<Customer>.Filter.Eq("Id", customer.Id);
-
             var updateId = Builders<Customer>.Update.Set("Id", customer.Id);
             var updateName = Builders<Customer>.Update.Set("Name", customer.Name);
             var updateEmail = Builders<Customer>.Update.Set("EmailAddress", customer.EmailAddress);
             var updateAddress = Builders<Customer>.Update.Set("Address", customer.Address);
-            var updateDef = Builders<Customer>.Update.Combine(updateId, updateName, updateEmail, updateAddress);
+            var updatePreferred = Builders<Customer>.Update.Set("IsPreferredCustomer", customer.IsPreferredCustomer);
+
+            var updateDef = Builders<Customer>.Update.Combine(updateId, updateName, updateEmail, updateAddress, updatePreferred);
 
             var options = new FindOneAndUpdateOptions<Customer>()
             {
@@ -56,7 +58,7 @@ namespace Customers
           
         }
 
-        public async Task<Customer> Find(Guid id)
+        public async Task<Customer> Find(string id)
         {
             var customer = await this.customerCollection.Find<Customer>(x => x.Id == id).FirstAsync();
 

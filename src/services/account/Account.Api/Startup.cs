@@ -32,6 +32,7 @@ namespace Account.Api
         {
             var mongoConnectionString = this.Configuration.GetSection("MongoConnection")["ConnectionString"];
             var customerServiceBaseUrl = this.Configuration.GetSection("ServiceUrls")["CustomerService"];
+
             builder.RegisterModule(new RepositoryModule(mongoConnectionString, customerServiceBaseUrl));
             builder.RegisterModule(new ApplicationModule());
             builder.RegisterModule(new LoggingModule());

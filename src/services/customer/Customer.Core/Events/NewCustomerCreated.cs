@@ -9,7 +9,7 @@ namespace Customers.Events
     {
         public const string EVENT_NAMESPACE = "Customer.Created";
 
-        public NewCustomerCreated(Customer customer) : base(EVENT_NAMESPACE)
+        public NewCustomerCreated(Customer customer) : base(customer.Id, EVENT_NAMESPACE)
         {
             Customer = customer;
         }

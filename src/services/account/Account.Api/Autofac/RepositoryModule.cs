@@ -5,6 +5,8 @@ using Autofac;
 using Account.Exceptions;
 using Account.Customers;
 using MongoDB.Driver;
+using MongoEventStore;
+using EventStore;
 
 namespace Account.Autofac
 {
@@ -24,11 +26,13 @@ namespace Account.Autofac
             if (string.IsNullOrEmpty(mongoDbConnection)) throw new ApplicationConfigurationException("Unable to find mongodb connection string");
             if (string.IsNullOrEmpty(customerBaseUrl)) throw new ApplicationConfigurationException("Unable to find customer service base url");
 
-            builder.Register(c => new MongoClient(mongoDbConnection)).SingleInstance(); //thread safe connection
+            builder.Register(c => new MongoClient(mongoDbConnection)).As<IMongoClient>().SingleInstance(); //thread safe connection
+
+            builder.RegisterType<MongoEventStore.MongoEventStore>().As<IEventStore>();
 
             builder.RegisterType<BankAccountRepository>().As<IBankAccountRepository>();
 
-            builder.RegisterType<CustomerRepositoryProxy>().As<ICustomerRepository>();
+            builder.RegisterType<CustomerRepositoryProxy>().As<ICustomerRepository>().WithParameter("baseUrl", customerBaseUrl);
             
         }
     }

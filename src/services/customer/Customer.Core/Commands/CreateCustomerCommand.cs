@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Customers.Commands
 {
-    public class CreateCustomerCommand : ICommand
+    public class CreateCustomer : ICommand
     {
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -16,5 +16,6 @@ namespace Customers.Commands
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string EmailAddress { get; set; }
+        public bool IsPreferredCustomer { get; set; }
     }
 }

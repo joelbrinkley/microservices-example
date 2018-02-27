@@ -19,7 +19,7 @@ namespace Customers
 
         public string FullName => $"{this.First} {this.Middle} {this.Last}";
         public string FirstAndLast => $"{this.First} {this.Last}";
-
+        
         public override bool Equals(object other)
         {
             return this.Equals(other as Name);

@@ -4,6 +4,10 @@ services:
     ports:
       - "9885:80"
       - "9887:433"
+    depends_on:
+      - customer-service
+      - account-service
+      - account-view-service
 
   microservice-example-sql:
     ports:

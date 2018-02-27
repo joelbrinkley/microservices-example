@@ -4,6 +4,10 @@ WORKDIR /src/common/Domain
 COPY /src/common/Domain/Domain.csproj .
 RUN dotnet restore
 
+WORKDIR /src/common/MongoEventStore
+COPY /src/common/MongoEventStore/MongoEventStore.csproj .
+RUN dotnet restore
+
 WORKDIR /src/services/account/Account.Core
 COPY /src/services/account/Account.Core/Account.Core.csproj .
 RUN dotnet restore
@@ -29,6 +33,7 @@ COPY /src/services/account/Account.Api/Account.Api.csproj .
 RUN dotnet restore
 
 COPY /src/common/Domain/ /src/common/Domain/
+COPY /src/common/MongoEventStore/ /src/common/MongoEventStore/
 COPY /src/services/account/Account.Core/ /src/services/account/Account.Core/
 COPY /src/services/account/Account.Logging/ /src/services/account/Account.Logging/
 COPY /src/services/account/Account.Data/ /src/services/account/Account.Data/
