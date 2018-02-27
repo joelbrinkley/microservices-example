@@ -12,6 +12,9 @@ services:
   customer-service:
     image: microexample/customerservice:v1
     container_name: customer-service
+  account-view-service:
+    image: microexample/account-view-service:v1
+    container_name: account-view-service
   microservice-example-queue: 
     image: nats:linux
     container_name: microservice-example-mq

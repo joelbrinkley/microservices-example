@@ -16,4 +16,8 @@ services:
     build:
       context: ./
       dockerfile: ./docker/AccountClient/dockerfile
+  account-view-service:
+    build:
+      context: ./
+      dockerfile: ./docker/AccountView/dockerfile
       

@@ -4,7 +4,7 @@ import { BankAccount } from '../models/bank-account';
 
 @Component({
     selector: 'all-accounts-list',
-    templateUrl: 'all-accounts-list.component.html'
+    templateUrl: './all-accounts-list.component.html'
 })
 export class ViewAllAccountsComponent implements OnInit {
 

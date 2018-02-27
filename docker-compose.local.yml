@@ -4,15 +4,26 @@ services:
     ports:
       - "9885:80"
       - "9887:433"
+
   microservice-example-sql:
     ports:
       - "1515:1433"
     environment:
       SA_PASSWORD: "PWord1!!!"
       ACCEPT_EULA: "Y"
+
   microservice-example-mongo:
     ports:
       - "27017:27017"
+
+  account-view-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7845:80"
+    depends_on:
+      - microservice-example-sql
+
   account-service:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -20,6 +31,7 @@ services:
       - "7887:80"
     depends_on:
       - microservice-example-mongo
+      
   customer-service:
     environment:
      - ASPNETCORE_ENVIRONMENT=Development

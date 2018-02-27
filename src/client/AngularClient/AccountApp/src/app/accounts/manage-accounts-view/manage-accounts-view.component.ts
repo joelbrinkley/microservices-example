@@ -3,15 +3,15 @@ import { BankAccount } from '../models/bank-account';
 
 @Component({
     selector: 'manage-accounts-view',
-    templateUrl: 'manage-accounts-view.component.html'
+    templateUrl: './manage-accounts-view.component.html'
 })
-export class ViewAllAccountsComponent {
+export class ManageAccountsViewComponent {
 
     constructor() {
 
     }
 
-    selectAccount($event : BankAccount){
+    selectAccount($event: BankAccount) {
         console.log('selected account: ' + $event.id)
     }
 }

@@ -12,6 +12,7 @@ export class SettingsProvider {
   }
  
   public loadConfig() : Promise<any>{
+    console.log('loading config');
     return this.http.get("assets/client-config.json")
       .map(res => res.json())
       .toPromise()

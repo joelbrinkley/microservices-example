@@ -1,6 +1,5 @@
 ﻿using Autofac;
 using Account.Commands;
-using Account.Queries;
 using Domain.Commands;
 using Domain.Queries;
 
@@ -13,9 +12,7 @@ namespace Account.Autofac
             builder.RegisterType<WithdrawFromAccountHandler>().As<ICommandHandler<WithdrawFromBankAccount>>();
             builder.RegisterType<CreateAccountHandler>().As<ICommandHandler<CreateAccount>>();
             builder.RegisterType<DepositIntoAccountHandler>().As<ICommandHandler<DepositMoneyIntoAccount>>();
-
-            builder.RegisterType<FindBankAccountQueryHandler>().As<IQueryHandler<FindAccountQuery, BankAccount>>();
-            
+                        
         }
     }
 }

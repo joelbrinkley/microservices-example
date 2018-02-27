@@ -10,6 +10,7 @@ RUN npm install @angular/cli -g
 
 USER root
 RUN mkdir ng-app
+RUN mkdir ng-app/dist
 
 WORKDIR /ng-app
 
@@ -23,7 +24,12 @@ RUN npm update && npm set progress=false && npm install
 
 COPY /src/client/AngularClient/AccountApp/ .
 
-RUN ng build --prod
+USER root
+RUN chown -R node:node /ng-app/dist
+RUN chmod -R 777 /ng-app/dist
+USER node
+
+RUN ng build 
 
 EXPOSE 3000
 
