@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Customers.Commands;
 using Domain.Commands;
-using Customers.Logging;
+using Logging;
 
 namespace Customers.Commands
 {

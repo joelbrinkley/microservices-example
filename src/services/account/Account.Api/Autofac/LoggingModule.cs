@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
-using Account.Logging;
+using Logging;
 
 namespace Account.Autofac
 {
@@ -11,7 +11,7 @@ namespace Account.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<LoggingAdapter>().As<ILog>();
+            builder.RegisterType<SerilogAdapter>().As<ILog>();
         }
     }
 }

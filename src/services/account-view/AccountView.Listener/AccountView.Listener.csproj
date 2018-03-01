@@ -9,4 +9,10 @@
     <PackageReference Include="Autofac" Version="4.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\shared\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\shared\Logging\Logging.csproj" />
+    <ProjectReference Include="..\AccountView.Data\AccountView.Data.csproj" />
+  </ItemGroup>
+
 </Project>

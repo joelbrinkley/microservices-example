@@ -1,6 +1,6 @@
-﻿using Account.Logging;
-using Domain;
+﻿using Domain;
 using Domain.Commands;
+using Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,15 +1,15 @@
 FROM microsoft/aspnetcore-build:2 as builder
 
-WORKDIR /src/common/Domain
-COPY /src/common/Domain/Domain.csproj .
+WORKDIR /src/shared/Domain
+COPY /src/shared/Domain/Domain.csproj .
+RUN dotnet restore
+
+WORKDIR /src/shared/Logging
+COPY /src/shared/Logging/Logging.csproj .
 RUN dotnet restore
 
 WORKDIR /src/services/customer/Customer.Core
 COPY /src/services/customer/Customer.Core/Customer.Core.csproj .
-RUN dotnet restore
-
-WORKDIR /src/services/customer/Customer.Logging
-COPY /src/services/customer/Customer.Logging/Customer.Logging.csproj .
 RUN dotnet restore
 
 WORKDIR /src/services/customer/Customer.Data
@@ -24,9 +24,9 @@ WORKDIR /src/services/customer/Customer.Api
 COPY /src/services/customer/Customer.Api/Customer.Api.csproj .
 RUN dotnet restore
 
-COPY /src/common/Domain/ /src/common/Domain/
+COPY /src/shared/Domain/ /src/shared/Domain/
+COPY /src/shared/Logging/ /src/shared/Logging/
 COPY /src/services/customer/Customer.Core/ /src/services/customer/Customer.Core/
-COPY /src/services/customer/Customer.Logging/ /src/services/customer/Customer.Logging/
 COPY /src/services/customer/Customer.Data/ /src/services/customer/Customer.Data/
 COPY /src/services/customer/Customer.Application/ /src/services/customer/Customer.Application/
 COPY /src/services/customer/Customer.Api/ /src/services/customer/Customer.Api/

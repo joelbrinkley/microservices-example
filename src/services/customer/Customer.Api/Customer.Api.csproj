@@ -23,11 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\common\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\..\shared\Domain\Domain.csproj" />    
+    <ProjectReference Include="..\..\..\shared\Logging\Logging.csproj" />
     <ProjectReference Include="..\Customer.Application\Customer.Application.csproj" />
     <ProjectReference Include="..\Customer.Core\Customer.Core.csproj" />
     <ProjectReference Include="..\Customer.Data\Customer.Data.csproj" />
-    <ProjectReference Include="..\Customer.Logging\Customer.Logging.csproj" />
   </ItemGroup>
 
 </Project>

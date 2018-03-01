@@ -1,4 +1,4 @@
-﻿using Account.Logging;
+﻿using Logging;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;

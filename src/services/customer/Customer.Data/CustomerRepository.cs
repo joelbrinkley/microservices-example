@@ -1,4 +1,4 @@
-﻿using Customers.Logging;
+﻿using Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;

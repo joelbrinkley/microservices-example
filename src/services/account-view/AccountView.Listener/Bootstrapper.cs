@@ -12,7 +12,7 @@ namespace Customers.EventPublisher
         {
             var builder = new ContainerBuilder();
 
-      
+            
 
             return builder.Build();
         }

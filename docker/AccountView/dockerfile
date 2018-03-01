@@ -1,7 +1,11 @@
 FROM microsoft/aspnetcore-build:2 as builder
 
-WORKDIR /src/common/Domain
-COPY /src/common/Domain/Domain.csproj .
+WORKDIR /src/shared/Domain
+COPY /src/shared/Domain/Domain.csproj .
+RUN dotnet restore
+
+WORKDIR /src/shared/Logging
+COPY /src/shared/Logging/Logging.csproj .
 RUN dotnet restore
 
 WORKDIR /src/services/account-view/AccountView.Data
@@ -12,7 +16,8 @@ WORKDIR /src/services/account-view/AccountView.Api
 COPY /src/services/account-view/AccountView.Api/AccountView.Api.csproj .
 RUN dotnet restore
 
-COPY /src/common/Domain/ /src/common/Domain/
+COPY /src/shared/Domain/ /src/shared/Domain/
+COPY /src/shared/Logging/ /src/shared/Logging/
 COPY /src/services/account-view/AccountView.Data/ /src/services/account-view/AccountView.Data/
 COPY /src/services/account-view/AccountView.Api/ /src/services/account-view/AccountView.Api/
 

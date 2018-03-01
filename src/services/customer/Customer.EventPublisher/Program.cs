@@ -3,7 +3,8 @@ using System;
 using System.Threading;
 using Domain.DomainEvents;
 using Autofac;
-using Customers.Logging;
+using Logging;
+using Logging;
 
 namespace Customers.EventPublisher
 {

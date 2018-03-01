@@ -1,13 +1,18 @@
 ﻿using Serilog;
 using System;
 
-namespace Account.Logging
+namespace Logging
 {
-    public class LoggingAdapter : ILog
+    public class SerilogAdapter : ILog
     {
+        public void Error(string message)
+        {
+            Log.Error(message);
+        }
+
         public void Error(string message, Exception e)
         {
-            Log.Error($"{message} \r\n {e.Message} \r\n {e.StackTrace}");
+            Log.Error($"{message} \r\n \r\n {e.Message} \r\n {e.StackTrace}");
         }
 
         public void Information(string message)

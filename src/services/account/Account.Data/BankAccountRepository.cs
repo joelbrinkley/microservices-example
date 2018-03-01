@@ -1,4 +1,4 @@
-﻿using Account.Logging;
+﻿using Logging;
 using EventStore;
 using System;
 using System.Linq;

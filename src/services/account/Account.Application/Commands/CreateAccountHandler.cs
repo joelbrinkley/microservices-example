@@ -1,6 +1,6 @@
 ﻿using Account.Customers;
 using Account.Exceptions;
-using Account.Logging;
+using Logging;
 using Domain;
 using Domain.Commands;
 using System;

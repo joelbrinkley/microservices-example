@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Customers.Logging;
+using Logging;
 using MongoDB.Driver;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;

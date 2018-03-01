@@ -1,5 +1,6 @@
-﻿using Customers.Logging;
+﻿using Logging;
 using Domain.DomainEvents;
+using Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NATS.Client;
