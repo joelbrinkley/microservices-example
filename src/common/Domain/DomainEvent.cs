@@ -27,6 +27,8 @@ namespace Domain.DomainEvents
 
         //A boolean representing as the event been successfully published
         public bool HasBeenPublished { get; protected set; }
+
+        public DateTime? PublishedOn { get; protected set; }
        
         public DomainEvent(string aggregateid, string messageNameSpace)
             :this(Guid.NewGuid(), aggregateid, messageNameSpace, DateTime.UtcNow, false)
@@ -47,6 +49,12 @@ namespace Domain.DomainEvents
         public DomainEvent(string EVENT_NAMESPACE)
         {
             this.EVENT_NAMESPACE = EVENT_NAMESPACE;
+        }
+
+        public void MarkPublished()
+        {
+            this.HasBeenPublished = true;
+            this.PublishedOn = DateTime.UtcNow;
         }
     }
 }

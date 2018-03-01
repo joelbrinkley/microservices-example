@@ -4,18 +4,27 @@ services:
     build:
       context: ./
       dockerfile: ./docker/AccountService/dockerfile
+
   customer-service:
     build:
       context: ./
       dockerfile: ./docker/CustomerService/dockerfile
+  
+  customer-event-publisher:
+    build:
+      context: ./
+      dockerfile: ./docker/CustomerEventPublisher/dockerfile
+
   microservice-example-proxy:
     build:
       context: ./
       dockerfile: ./docker/Nginx/dockerfile
+
   account-client:
     build:
       context: ./
       dockerfile: ./docker/AccountClient/dockerfile
+
   account-view-service:
     build:
       context: ./

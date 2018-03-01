@@ -14,6 +14,12 @@ namespace Customers.Events
             Customer = customer;
         }
 
+        public NewCustomerCreated(string id, string aggregateId, DateTime createdOn, bool hasBeenPublished, Customer customer)
+             :base(new Guid(id), aggregateId, EVENT_NAMESPACE, createdOn, hasBeenPublished)
+        {
+            this.Customer = customer;
+        }
+
         public Customer Customer { get; }
     }
 }

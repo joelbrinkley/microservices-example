@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
+
 namespace Customer.Api
 {
     public class Program

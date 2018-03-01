@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="MongoDB.Driver" Version="2.5.0" />
+    <PackageReference Include="NATS.Client" Version="0.8.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\common\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Customer.Core\Customer.Core.csproj" />
+    <ProjectReference Include="..\Customer.Data\Customer.Data.csproj" />
+    <ProjectReference Include="..\Customer.Logging\Customer.Logging.csproj" />
+  </ItemGroup>
+
+</Project>

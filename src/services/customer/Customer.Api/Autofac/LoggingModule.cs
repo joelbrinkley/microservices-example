@@ -11,7 +11,7 @@ namespace Customers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<LoggingAdapter>().As<ILog>();
+            builder.RegisterType<SerilogAdapter>().As<ILog>();
         }
     }
 }

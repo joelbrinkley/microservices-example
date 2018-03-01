@@ -9,12 +9,16 @@ services:
     container_name: microservice-example-sql
 
   account-service:
-    image: microexample/accountservice:v1
+    image: microexample/account-service:v1
     container_name: account-service
 
   customer-service:
-    image: microexample/customerservice:v1
+    image: microexample/customer-service:v1
     container_name: customer-service
+
+  customer-event-publisher:
+    image: microexample/customer-event-pubisher:v1
+    container_name: customer-event-publisher
 
   account-view-service:
     image: microexample/account-view-service:v1

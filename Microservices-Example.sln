@@ -69,6 +69,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountView.Data", "src\ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountView.Listener", "src\services\account-view\AccountView.Listener\AccountView.Listener.csproj", "{61C74520-942A-44F9-9E26-8D67C26A71FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.EventPublisher", "src\services\customer\Customer.EventPublisher\Customer.EventPublisher.csproj", "{125F6DC4-61E6-43E8-B84C-9BF8A1C866E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,10 @@ Global
 		{61C74520-942A-44F9-9E26-8D67C26A71FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61C74520-942A-44F9-9E26-8D67C26A71FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61C74520-942A-44F9-9E26-8D67C26A71FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{125F6DC4-61E6-43E8-B84C-9BF8A1C866E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{125F6DC4-61E6-43E8-B84C-9BF8A1C866E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{125F6DC4-61E6-43E8-B84C-9BF8A1C866E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{125F6DC4-61E6-43E8-B84C-9BF8A1C866E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,6 +188,7 @@ Global
 		{F7E0A581-5C11-4879-BC3E-A646073B2B19} = {BD96B0CD-2043-416D-9782-C53F6E0EEAAF}
 		{E7223D49-3DC1-47CB-89C6-A24AC24B7B78} = {BD96B0CD-2043-416D-9782-C53F6E0EEAAF}
 		{61C74520-942A-44F9-9E26-8D67C26A71FA} = {BD96B0CD-2043-416D-9782-C53F6E0EEAAF}
+		{125F6DC4-61E6-43E8-B84C-9BF8A1C866E5} = {685A6ECF-EE73-4CC9-AE18-F405F33FDAFF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA1CCAB7-CB0A-4B98-AEC7-EAF1C3506673}

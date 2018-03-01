@@ -3,7 +3,7 @@ using System;
 
 namespace Customers.Logging
 {
-    public class LoggingAdapter : ILog
+    public class SerilogAdapter : ILog
     {
         public void Error(string message)
         {
