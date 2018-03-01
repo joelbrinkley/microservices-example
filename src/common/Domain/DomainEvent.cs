@@ -3,7 +3,7 @@ using System;
 
 namespace Domain.DomainEvents
 {
-    public abstract class DomainEvent<T>
+    public class DomainEvent<T>
     {
         private string EVENT_NAMESPACE;
 
@@ -29,14 +29,16 @@ namespace Domain.DomainEvents
         public bool HasBeenPublished { get; protected set; }
 
         public DateTime? PublishedOn { get; protected set; }
+
+        public string EventData { get;protected set; }
        
         public DomainEvent(string aggregateid, string messageNameSpace)
-            :this(Guid.NewGuid(), aggregateid, messageNameSpace, DateTime.UtcNow, false)
+            :this(Guid.NewGuid(), aggregateid, messageNameSpace, DateTime.UtcNow, false, string.Empty)
         {
 
         }
 
-        public DomainEvent(Guid eventId, string aggregateId, string messageNameSpace, DateTime createdOn, bool hasBeenPublished)
+        public DomainEvent(Guid eventId, string aggregateId, string messageNameSpace, DateTime createdOn, bool hasBeenPublished, string eventData)
         {
             this.CreatedOn = createdOn;
             this.Id = eventId;
@@ -44,6 +46,7 @@ namespace Domain.DomainEvents
             this.MessageNameSpace = messageNameSpace;
             this.HasBeenPublished = HasBeenPublished;
             this.CreatedOn = createdOn;
+            this.EventData = eventData;
         }
 
         public DomainEvent(string EVENT_NAMESPACE)

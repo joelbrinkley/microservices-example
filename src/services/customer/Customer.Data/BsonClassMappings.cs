@@ -42,8 +42,7 @@ namespace Customers
             BsonClassMap.RegisterClassMap<NewCustomerCreated>(cm =>
             {
                 cm.AutoMap();
-                cm.MapMember(x => x.Customer).SetElementName("Customer");
-                cm.MapCreator(x => new NewCustomerCreated(x.Id.ToString(), x.AggregateId, x.CreatedOn, x.HasBeenPublished, x.Customer));
+                cm.MapCreator(x => new NewCustomerCreated(x.Id.ToString(), x.AggregateId, x.CreatedOn, x.HasBeenPublished, x.EventData));
             });
         }
     }
