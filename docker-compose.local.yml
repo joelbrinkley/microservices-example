@@ -1,5 +1,71 @@
 version: '3.3'
 services:
+  #######################################
+  # customer services
+  #######################################
+  customer-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7888:80"
+    links:
+      - elk
+    depends_on:
+     - microservice-example-mongo
+     - elk
+
+  customer-event-publisher:
+    environment:
+      - MONGODB=mongodb://microservice-example-mongo:27017
+      - MESSAGE_QUEUE_URL=nats://microservice-example-queue:4222
+      - ELK=http://microexample-elk:9200
+    links:
+      - elk
+    depends_on:
+      - microservice-example-mongo
+      - microservice-example-queue
+      - elk
+
+  #######################################
+  # account services
+  #######################################
+  account-view-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7845:80"
+    links:
+    - elk
+    depends_on:
+      - microservice-example-sql
+      - elk
+
+  account-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "7887:80"
+    links:
+      - elk
+    depends_on:
+      - microservice-example-mongo
+      - elk
+  
+  account-view-listener:
+    environment:
+      - SQL_CONNECTION=Server=microservice-example-sql;Initial Catalog=AccountView;User Id=sa;Password=PWord1!!!;
+      - MESSAGE_QUEUE_URL=nats://microservice-example-queue:4222
+      - ELK=http://microexample-elk:9200
+    links:
+      - elk
+    depends_on:
+      - microservice-example-sql
+      - microservice-example-queue
+      - elk
+
+  #######################################
+  # infrastructure services
+  #######################################   
   microservice-example-proxy:
     ports:
       - "9885:80"
@@ -19,51 +85,12 @@ services:
   microservice-example-mongo:
     ports:
       - "27017:27017"
-
-  account-view-service:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "7845:80"
-    links:
-    - elk
-    depends_on:
-      - microservice-example-sql
-
-  account-service:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "7887:80"
-    links:
-      - elk
-    depends_on:
-      - microservice-example-mongo
       
   microservice-example-queue: 
     ports:
       - "9009:4222"
+      - "9010:8222"
 
-  customer-service:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "7888:80"
-    links:
-      - elk
-    depends_on:
-     - microservice-example-mongo
-
-  customer-event-publisher:
-    environment:
-      - MONGODB=mongodb://microservice-example-mongo:27017
-      - MESSAGE_QUEUE_URL=nats://microservice-example-queue:4222
-      - ELK=http://microexample-elk:9200
-    links:
-      - elk
-    depends_on:
-      - microservice-example-mongo
-      - microservice-example-queue
   elk:
     image: sebp/elk
     container_name: microexample-elk

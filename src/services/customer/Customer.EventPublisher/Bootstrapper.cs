@@ -20,12 +20,12 @@ namespace Customers.EventPublisher
 
             if (string.IsNullOrEmpty(mongoConnectionString))
             {
-                throw new MongoConfigurationException("The mongodb environment variable is missing.  Please check env variable MONGODB");
+                throw new Exception("The mongodb environment variable is missing.  Please check env variable MONGODB");
             }
 
             if (string.IsNullOrEmpty(elkUrl))
             {
-                throw new MongoConfigurationException("The elk environment variable is missing.  Please check env variable ELK");
+                throw new Exception("The elk environment variable is missing.  Please check env variable ELK");
             }
 
             Log.Logger = new LoggerConfiguration()

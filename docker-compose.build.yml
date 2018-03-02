@@ -1,32 +1,52 @@
 version: '3.3'
 services:
-  account-service:
-    build:
-      context: ./
-      dockerfile: ./docker/AccountService/dockerfile
-
+  #######################################
+  # customer services
+  #######################################
   customer-service:
     build:
       context: ./
       dockerfile: ./docker/CustomerService/dockerfile
-  
   customer-event-publisher:
     build:
       context: ./
       dockerfile: ./docker/CustomerEventPublisher/dockerfile
 
-  microservice-example-proxy:
+  #######################################
+  # account services
+  #######################################
+  account-service:
     build:
       context: ./
-      dockerfile: ./docker/Nginx/dockerfile
-
-  account-client:
-    build:
-      context: ./
-      dockerfile: ./docker/AccountClient/dockerfile
+      dockerfile: ./docker/AccountService/dockerfile
 
   account-view-service:
     build:
       context: ./
       dockerfile: ./docker/AccountView/dockerfile
+  
+  account-view-listener:
+    build:
+      context: ./
+      dockerfile: ./docker/AccountViewListener/dockerfile
+
+  #######################################
+  # client services
+  #######################################
+  account-client:
+    build:
+      context: ./
+      dockerfile: ./docker/AccountClient/dockerfile
+
+  #######################################
+  # infrastructure services
+  #######################################
+  microservice-example-proxy:
+    build:
+      context: ./
+      dockerfile: ./docker/Nginx/dockerfile
+
+ 
+
+
       

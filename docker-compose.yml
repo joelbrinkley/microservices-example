@@ -1,17 +1,9 @@
 version: '3.3'
 services:
-  microservice-example-mongo:
-    image: mongo
-    container_name: microservice-example-mongo
-
-  microservice-example-sql:
-    image: microsoft/mssql-server-linux
-    container_name: microservice-example-sql
-
-  account-service:
-    image: microexample/account-service:v1
-    container_name: account-service
-
+ 
+  #######################################
+  # customer services
+  #######################################
   customer-service:
     image: microexample/customer-service:v1
     container_name: customer-service
@@ -20,19 +12,45 @@ services:
     image: microexample/customer-event-pubisher:v1
     container_name: customer-event-publisher
 
+  #######################################
+  # account services
+  #######################################
+  account-service:
+    image: microexample/account-service:v1
+    container_name: account-service
+
   account-view-service:
     image: microexample/account-view-service:v1
     container_name: account-view-service
 
+  account-view-listener:
+    image: microexample/account-view-listener:v1
+    #container_name: account-view-listener removing container name to allow docker to use --scale
+
+  #######################################
+  # client services
+  #######################################
+  account-client:
+    image: microexample/account-client:v1
+    container_name: account-client
+
+  #######################################
+  # infrastructure services
+  #######################################
   microservice-example-queue: 
     image: nats:linux
     container_name: microservice-example-mq
 
-  account-client:
-    image: microexample/account-client:v1
-    container_name: account-client
+  microservice-example-mongo:
+    image: mongo
+    container_name: microservice-example-mongo
+
+  microservice-example-sql:
+    image: microsoft/mssql-server-linux
+    container_name: microservice-example-sql
     
   microservice-example-proxy:
     image: microexample/reverseproxy
     container_name: microservice-example-proxy
+  
     

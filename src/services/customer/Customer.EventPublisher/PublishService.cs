@@ -92,12 +92,16 @@ namespace Customers.EventPublisher
                         this.log.Information($"Published: {jsonPayload}");
 
                         @event.MarkPublished();
+
+
                     }
                     catch (Exception e)
                     {
                         this.log.Error($"Failed to publish event {@event.MessageNameSpace}: {@event.Id} for aggregate {@event.AggregateId}");
                     }
                 }
+
+                connection.Close();
             }
         }
     }

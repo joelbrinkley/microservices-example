@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Customers.EventPublisher
+namespace AccountView.Listener
 {
     public class Config
     {

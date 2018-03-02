@@ -11,7 +11,7 @@ namespace Customers.EventPublisher
     class Program
     {
         static ManualResetEvent shutdown = new ManualResetEvent(false);
-        
+
         static void Main(string[] args)
         {
             int retryStartCount = 0;
@@ -20,12 +20,17 @@ namespace Customers.EventPublisher
 
             ILog log = container.Resolve<ILog>();
 
-            while(retryStartCount < 5)
+            var eventPublisher = container.Resolve<PublisherService<Customer>>();
+
+            while (retryStartCount < 5)
             {
+                if (retryStartCount != 0)
+                {
+                    log.Information($"Attempting to restart the event publisher. Retry attempt: {retryStartCount}");
+                }
+
                 try
                 {
-                    var eventPublisher = container.Resolve<PublisherService<Customer>>();
-
                     eventPublisher.Start();
                 }
                 catch (Exception e)
@@ -36,7 +41,10 @@ namespace Customers.EventPublisher
             }
 
             log.Information("Encountered to many errors: shutting down Event Publisher Service");
+
             shutdown.WaitOne();
+
+            eventPublisher.Stop();
         }
     }
 }
