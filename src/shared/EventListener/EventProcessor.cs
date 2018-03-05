@@ -1,24 +1,24 @@
-﻿using AccountView.Data;
-using AccountView.Listener.EventProcessors;
-using Domain.DomainEvents;
+﻿
 using Logging;
 using NATS.Client;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccountView.Listener
+namespace EventListener
 {
     public class EventProcessor : IEventProcessor
     {
-        private readonly IDictionary<string, IProcessEvents> eventProcessorMap;
+        private readonly string brokerUrl;
+        private readonly EventProcessorMap eventProcessorMap;
         private readonly ILog log;
         private bool isRunning = false;
         private IConnection connection;
         private List<IAsyncSubscription> subscriptions;
 
-        public EventProcessor(IDictionary<string, IProcessEvents> eventProcessorMap, ILog log)
+        public EventProcessor(string brokerUrl, EventProcessorMap eventProcessorMap, ILog log)
         {
+            this.brokerUrl = brokerUrl;
             this.eventProcessorMap = eventProcessorMap;
             this.log = log;
             this.subscriptions = new List<IAsyncSubscription>();
@@ -26,7 +26,7 @@ namespace AccountView.Listener
         
         public void Connect()
         {
-            connection = new ConnectionFactory().CreateConnection(Config.BROKER_URL);
+            connection = new ConnectionFactory().CreateConnection(brokerUrl);
         }
 
         public void SubscribeAll()

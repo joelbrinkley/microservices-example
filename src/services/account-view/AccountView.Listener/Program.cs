@@ -4,6 +4,10 @@ using Autofac;
 using Logging;
 using NATS.Client;
 using AccountView.Listener.EventProcessors;
+using EventListener;
+using AccountView.Data;
+using Microsoft.EntityFrameworkCore;
+using AccountView.Listener.ContextFactory;
 
 namespace AccountView.Listener
 {
@@ -24,7 +28,7 @@ namespace AccountView.Listener
                     var container = Bootstrapper.Run();
 
                     log = container.Resolve<ILog>();
-
+                    
                     eventProcessor = container.Resolve<IEventProcessor>();
 
                     eventProcessor.Connect();
@@ -42,9 +46,9 @@ namespace AccountView.Listener
                 {
                     eventProcessor?.Disconnect();
                 }
-            }           
-            
+            }
+
             log.Information("Account View Listener has shutdown");
-        }
+        }        
     }
 }

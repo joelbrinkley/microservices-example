@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Customers.Events;
 using Customers.Exceptions;
+using Domain;
 using Domain.DomainEvents;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -31,6 +32,8 @@ namespace Customers
             builder.Register(c => new MongoClient(mongoDbConnection)).As<IMongoClient>().SingleInstance(); //thread safe connection
 
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
+
+            builder.RegisterType<EventStream>().As<IEventStream<Customer>>();
 
             BsonClassMappings.Configure();
         }      

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccountView.Listener.EventProcessors
+namespace EventListener
 {
     public interface IEventProcessor
     {

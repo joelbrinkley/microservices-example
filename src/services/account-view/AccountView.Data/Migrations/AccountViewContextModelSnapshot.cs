@@ -11,20 +11,21 @@ using System;
 namespace AccountView.Data.Migrations
 {
     [DbContext(typeof(AccountViewContext))]
-    [Migration("20180226193944_InitialCreate")]
-    partial class InitialCreate
+    partial class AccountViewContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AccountMgmtView.Data.Account", b =>
+            modelBuilder.Entity("AccountView.Data.Account", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("AccountCreatedOn");
 
                     b.Property<Guid>("AccountObjectId");
 
@@ -41,7 +42,43 @@ namespace AccountView.Data.Migrations
                     b.ToTable("Account");
                 });
 
-            modelBuilder.Entity("AccountMgmtView.Data.Customer", b =>
+            modelBuilder.Entity("AccountView.Data.AccountTransaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AccountId");
+
+                    b.Property<int>("AccountTransactionType");
+
+                    b.Property<decimal>("Amount");
+
+                    b.Property<Guid>("ObjectId");
+
+                    b.Property<DateTime>("Occurred");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.HasIndex("ObjectId");
+
+                    b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("AccountView.Data.Configuration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("LoadFromEventStore");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Configuration");
+                });
+
+            modelBuilder.Entity("AccountView.Data.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -61,12 +98,19 @@ namespace AccountView.Data.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("AccountMgmtView.Data.Account", b =>
+            modelBuilder.Entity("AccountView.Data.Account", b =>
                 {
-                    b.HasOne("AccountMgmtView.Data.Customer", "Customer")
+                    b.HasOne("AccountView.Data.Customer", "Customer")
                         .WithMany("Accounts")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AccountView.Data.AccountTransaction", b =>
+                {
+                    b.HasOne("AccountView.Data.Account")
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountId");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Logging;
 using NATS.Client;
 using Newtonsoft.Json.Linq;
+using EventListener;
 
 namespace AccountView.Listener.EventProcessors
 {

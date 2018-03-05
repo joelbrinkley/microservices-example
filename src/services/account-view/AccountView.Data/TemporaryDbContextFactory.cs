@@ -16,7 +16,7 @@ namespace AccountView.Data
         public AccountViewContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<AccountViewContext>();
-            builder.UseSqlServer("Server=localhost,1515;Database=AccountMgmtView;User=sa;Password=PWord1!!!;");
+            builder.UseSqlServer("Server=localhost,1515;Database=AccountView;User=sa;Password=PWord1!!!;");
             return new AccountViewContext(builder.Options);
         }
     }

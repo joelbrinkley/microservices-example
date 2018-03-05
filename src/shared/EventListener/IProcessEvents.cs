@@ -1,11 +1,10 @@
-﻿using Domain.DomainEvents;
-using NATS.Client;
+﻿using NATS.Client;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccountView.Listener.EventProcessors
+namespace EventListener
 {
     public interface IProcessEvents
     {

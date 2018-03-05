@@ -60,7 +60,7 @@ namespace Customers
 
         public async Task<Customer> Find(string id)
         {
-            var customer = await this.customerCollection.Find<Customer>(x => x.Id == id).FirstAsync();
+            var customer = await this.customerCollection.Find<Customer>(x => x.Id == id.ToLower()).FirstAsync();
 
             if (customer == null)
             {

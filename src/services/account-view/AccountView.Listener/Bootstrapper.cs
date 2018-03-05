@@ -3,8 +3,10 @@ using AccountView.Data;
 using AccountView.Listener.ContextFactory;
 using AccountView.Listener.EventProcessors;
 using Autofac;
+using EventListener;
 using Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Serilog;
 using Serilog.Sinks.Elasticsearch;
 using System;
@@ -31,7 +33,7 @@ namespace AccountView.Listener
             {
                 throw new Exception("The elk environment variable is missing.  Please check env variable ELK");
             }
-            
+                        
             Log.Logger = new LoggerConfiguration()
            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elkUrl))
            {
@@ -49,18 +51,19 @@ namespace AccountView.Listener
             builder.RegisterType<NewCustomerEventProcessor>().AsSelf().AsImplementedInterfaces();
 
             builder.RegisterType<AccountViewDbContextFactory>().As<IAccountViewContextFactory>().WithParameter("options", optionsBuilder.Options);
-
+            
             //build even maps
-            builder.Register<IDictionary<string, IProcessEvents>>(c =>
+            builder.Register<EventProcessorMap>(c =>
             {
-                var eventMaps = new Dictionary<string, IProcessEvents>();
+                var eventMaps = new EventProcessorMap();
 
                 eventMaps.Add("Customer.Created", c.Resolve<NewCustomerEventProcessor>());
 
                 return eventMaps;
             });
 
-            builder.RegisterType<EventProcessor>().As<IEventProcessor>();
+            builder.RegisterType<EventProcessor>().As<IEventProcessor>()
+                .WithParameter("brokerUrl", Config.BROKER_URL);
 
             return builder.Build();
         }

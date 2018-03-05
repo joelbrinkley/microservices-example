@@ -11,6 +11,7 @@ namespace AccountView.Data
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Configuration> Configuration { get; set; }
 
         public AccountViewContext()
         {
@@ -38,6 +39,9 @@ namespace AccountView.Data
             acctTransactionBuilder.HasKey(x => x.Id);
             acctTransactionBuilder.Property(x => x.Id).ValueGeneratedOnAdd();
             acctTransactionBuilder.HasIndex(x => x.ObjectId); //corresponds to the event id
+
+            var configurationBuilder = modelBuilder.Entity<Configuration>().ToTable("Configuration");
+            configurationBuilder.HasKey(x => x.Id);            
         }
     }
 }
