@@ -19,7 +19,7 @@ namespace Account
         {
             if (this.Balance - amount >= 0)
             {
-                this.Apply(new MoneyWithdrawn(this.Id, amount));
+                this.Apply(new AccountDebited(this.Id, amount));
             }
             else
             {
@@ -29,7 +29,7 @@ namespace Account
 
         public void Deposit(decimal amount)
         {
-            this.Apply(new MoneyDeposited(this.Id, amount));
+            this.Apply(new AccountCredited(this.Id, amount));
         }
 
         public static BankAccount CreateAccount(Guid customerId, decimal amount)
@@ -44,14 +44,14 @@ namespace Account
             return account;
         }
         
-        private void When(MoneyWithdrawn @event)
+        private void When(AccountDebited @event)
         {
-            this.Balance = this.Balance - @event.WithdrawAmount;
+            this.Balance = this.Balance - @event.DebitAmount;
         }
 
-        private void When(MoneyDeposited @event)
+        private void When(AccountCredited @event)
         {
-            this.Balance = this.Balance + @event.DepositAmount;
+            this.Balance = this.Balance + @event.CreditAmount;
         }
 
         private void When(AccountCreated @event)

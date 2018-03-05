@@ -14,16 +14,16 @@ namespace Account
     public class AccountController : Controller
     {
         private readonly ICommandHandler<CreateAccount> createAccountHandler;
-        private readonly ICommandHandler<WithdrawFromBankAccount> withdrawHandler;
-        private readonly ICommandHandler<DepositMoneyIntoAccount> depositHandler;
+        private readonly ICommandHandler<CreditAccount> creditHandler;
+        private readonly ICommandHandler<DebitAccount> debitHandler;
 
         public AccountController(ICommandHandler<CreateAccount> createAccountHandler,
-                                 ICommandHandler<WithdrawFromBankAccount> withdrawHandler,
-                                 ICommandHandler<DepositMoneyIntoAccount> depositHandler)
+                                 ICommandHandler<CreditAccount> withdrawHandler,
+                                 ICommandHandler<DebitAccount> depositHandler)
                             {
                                 this.createAccountHandler = createAccountHandler;
-                                this.withdrawHandler = withdrawHandler;
-                                this.depositHandler = depositHandler;
+                                this.creditHandler = withdrawHandler;
+                                this.debitHandler = depositHandler;
                             }
 
        
@@ -34,17 +34,17 @@ namespace Account
             return NoContent();
         }
 
-        [HttpPost, Route("{bankAccountId}/deposit")]
-        public async Task<IActionResult> DepositFunds(Guid bankAccountId, [FromBody] DepositMoneyIntoAccount depositCommand)
+        [HttpPost, Route("{bankAccountId}/credit")]
+        public async Task<IActionResult> CreditAccount(Guid bankAccountId, [FromBody] DebitAccount debitCommand)
         {
-            await this.depositHandler.Handle(depositCommand);
+            await this.debitHandler.Handle(debitCommand);
             return NoContent();
         }
 
-        [HttpPost, Route("{bankAccountId}/withdrawal")]
-        public async Task<IActionResult> WithdrawFunds(Guid bankAccountId, [FromBody] WithdrawFromBankAccount withdrawCommand)
+        [HttpPost, Route("{bankAccountId}/debit")]
+        public async Task<IActionResult> DebitAccount(Guid bankAccountId, [FromBody] CreditAccount creditCommand)
         {
-            await this.withdrawHandler.Handle(withdrawCommand);
+            await this.creditHandler.Handle(creditCommand);
             return NoContent();
         }
     }

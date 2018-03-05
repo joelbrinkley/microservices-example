@@ -74,8 +74,8 @@ namespace Account.UnitTests
             var events = new List<DomainEvent<BankAccount>>()
             {
                 new AccountCreated(bankAccountId, customerId, 100),
-                new MoneyWithdrawn(bankAccountId, 50),
-                new MoneyDeposited(bankAccountId, 10)
+                new AccountDebited(bankAccountId, 50),
+                new AccountCredited(bankAccountId, 10)
             };
 
             var bankAccount = new BankAccount();

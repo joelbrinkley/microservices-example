@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Account.Commands
 {
-    public class WithdrawFromAccountHandler : ICommandHandler<WithdrawFromBankAccount>
+    public class DebitAccountHandler : ICommandHandler<DebitAccount>
     {
         private readonly IBankAccountRepository bankAccountRepository;
         private readonly ILog log;
 
-        public WithdrawFromAccountHandler(IBankAccountRepository bankAccountRepository, ILog log)
+        public DebitAccountHandler(IBankAccountRepository bankAccountRepository, ILog log)
         {
             this.bankAccountRepository = bankAccountRepository;
             this.log = log;
         }
 
-        public async Task Handle(WithdrawFromBankAccount command)
+        public async Task Handle(DebitAccount command)
         {
             this.log.Information($"Handling withdraw command for account {command.BankAccountId}");
 

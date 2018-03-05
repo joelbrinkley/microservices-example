@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Account.Commands
 {
-    public class DepositIntoAccountHandler : ICommandHandler<DepositMoneyIntoAccount>
+    public class CreditAccountHandler : ICommandHandler<CreditAccount>
     {
         private readonly IBankAccountRepository bankAccountRepository;
         private readonly ILog log;
 
-        public DepositIntoAccountHandler(IBankAccountRepository bankAccountRepository, ILog log)
+        public CreditAccountHandler(IBankAccountRepository bankAccountRepository, ILog log)
         {
             this.bankAccountRepository = bankAccountRepository;
             this.log = log;
         }
 
-        public async Task Handle(DepositMoneyIntoAccount command)
+        public async Task Handle(CreditAccount command)
         {
             this.log.Information($"Handling deposit money command for account {command.BankAccountId}");
 
