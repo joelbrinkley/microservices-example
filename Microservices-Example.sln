@@ -63,13 +63,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "src\shared\Loggi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Account.Data", "src\services\account\Account.Data\Account.Data.csproj", "{694E62E5-93C1-4B72-A376-08B070BCD49C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventListener", "src\shared\EventListener\EventListener.csproj", "{2D8EC4E5-4359-4B61-A149-903DC10DE308}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventListener", "src\shared\EventListener\EventListener.csproj", "{2D8EC4E5-4359-4B61-A149-903DC10DE308}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountListener", "src\services\account\AccountListener\AccountListener.csproj", "{BACC25C9-5D92-43A6-A482-DC9AF20F3802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountListener", "src\services\account\AccountListener\AccountListener.csproj", "{BACC25C9-5D92-43A6-A482-DC9AF20F3802}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoEventStorePublisher", "src\shared\MongoEventStorePublisher\MongoEventStorePublisher.csproj", "{A79B3956-D842-4523-8C80-9EA780B4F93F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoEventStorePublisher", "src\shared\MongoEventStorePublisher\MongoEventStorePublisher.csproj", "{A79B3956-D842-4523-8C80-9EA780B4F93F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoEventStore", "src\shared\MongoEventStore\MongoEventStore.csproj", "{5D0F23B5-7142-4B1E-9E48-3BB9168A099B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoEventStore", "src\shared\MongoEventStore\MongoEventStore.csproj", "{5D0F23B5-7142-4B1E-9E48-3BB9168A099B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity", "identity", "{EC5A3A26-3C8E-4076-BBCC-A7D6B76B5BE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Api", "src\services\identity\Identity.Api\Identity.Api.csproj", "{6431710F-0A4C-4F7E-840B-92C1B7570CB7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,6 +165,10 @@ Global
 		{5D0F23B5-7142-4B1E-9E48-3BB9168A099B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D0F23B5-7142-4B1E-9E48-3BB9168A099B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D0F23B5-7142-4B1E-9E48-3BB9168A099B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6431710F-0A4C-4F7E-840B-92C1B7570CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6431710F-0A4C-4F7E-840B-92C1B7570CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6431710F-0A4C-4F7E-840B-92C1B7570CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6431710F-0A4C-4F7E-840B-92C1B7570CB7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,6 +201,8 @@ Global
 		{BACC25C9-5D92-43A6-A482-DC9AF20F3802} = {3A0D47BE-9A96-4267-B9F9-93C51842B06F}
 		{A79B3956-D842-4523-8C80-9EA780B4F93F} = {802881EA-8FFE-4E90-AA9F-0C77B35E6CB9}
 		{5D0F23B5-7142-4B1E-9E48-3BB9168A099B} = {802881EA-8FFE-4E90-AA9F-0C77B35E6CB9}
+		{EC5A3A26-3C8E-4076-BBCC-A7D6B76B5BE0} = {651C10DE-1D98-4954-9EDC-0324E727071D}
+		{6431710F-0A4C-4F7E-840B-92C1B7570CB7} = {EC5A3A26-3C8E-4076-BBCC-A7D6B76B5BE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA1CCAB7-CB0A-4B98-AEC7-EAF1C3506673}
