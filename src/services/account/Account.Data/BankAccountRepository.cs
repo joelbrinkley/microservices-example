@@ -34,7 +34,7 @@ namespace Account
         {
             this.log.Information($"Finding bank account {id}");
 
-            var events = await this.eventStore.ReadEvents<BankAccount>(id.ToString());
+            var events = await this.eventStore.ReadEvents(id.ToString());
 
             if (!events.Any())
             {

@@ -16,7 +16,8 @@ namespace AccountView.Listener.EventProcessors
     {
         private readonly IAccountViewContextFactory contextFactory;
         private readonly ILog log;
-
+        public string QueuePrefix => "Account.View";
+        
         public NewCustomerEventProcessor(IAccountViewContextFactory contextFactory, ILog log)
         {
             this.contextFactory = contextFactory;
@@ -27,24 +28,24 @@ namespace AccountView.Listener.EventProcessors
         {
             try
             {
-                var message = MessageSerializer.Deserializer(e.Message.Data);
+                var message = MessageSerializer.Deserializer<DomainEvent>(e.Message.Data);
                 Process(message);
                 log.Information("Processed New Customer Event", message);
             }
             catch(Exception ex)
             {
-                log.Information("Unabled to process New Customer Event", MessageSerializer.Deserializer(e.Message.Data));
+                log.Information("Unabled to process New Customer Event", MessageSerializer.Deserializer<DomainEvent>(e.Message.Data));
                 log.Error("Error", ex);
                 throw ex;
             }
         
         }
 
-        public void Process(JObject @event)
+        public void Process(DomainEvent @event)
         {
             using(var context = this.contextFactory.GetContext())
             {
-                var jobject = JsonConvert.DeserializeObject<JObject>(@event["EventData"].ToString());
+                var jobject = JsonConvert.DeserializeObject<JObject>(@event.EventData.ToString());
 
                 var customer = new Customer()
                 {

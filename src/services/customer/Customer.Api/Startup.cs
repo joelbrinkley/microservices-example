@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Autofac;
 using Customers;
 using Customers.Autofac;
+using Customers.Middleware;
 
 namespace Customer.Api
 {
@@ -41,9 +42,13 @@ namespace Customer.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment() || env.EnvironmentName == "Debug")
+            if (env.EnvironmentName == "Debug")
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandlerMiddlware();
             }
 
             app.UseMvc();

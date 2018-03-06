@@ -8,6 +8,6 @@ namespace Domain
 {
     public interface IEventStream<T>
     {
-        Task<IEnumerable<DomainEvent<T>>> ReadAll();
+        Task<IEnumerable<DomainEvent>> ReadAll();
     }
 }

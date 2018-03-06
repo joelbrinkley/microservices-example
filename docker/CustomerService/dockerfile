@@ -8,6 +8,10 @@ WORKDIR /src/shared/Logging
 COPY /src/shared/Logging/Logging.csproj .
 RUN dotnet restore
 
+WORKDIR /src/shared/MongoEventStore
+COPY /src/shared/MongoEventStore/MongoEventStore.csproj .
+RUN dotnet restore
+
 WORKDIR /src/services/customer/Customer.Core
 COPY /src/services/customer/Customer.Core/Customer.Core.csproj .
 RUN dotnet restore
@@ -26,6 +30,7 @@ RUN dotnet restore
 
 COPY /src/shared/Domain/ /src/shared/Domain/
 COPY /src/shared/Logging/ /src/shared/Logging/
+COPY /src/shared/MongoEventStore/ /src/shared/MongoEventStore/
 COPY /src/services/customer/Customer.Core/ /src/services/customer/Customer.Core/
 COPY /src/services/customer/Customer.Data/ /src/services/customer/Customer.Data/
 COPY /src/services/customer/Customer.Application/ /src/services/customer/Customer.Application/

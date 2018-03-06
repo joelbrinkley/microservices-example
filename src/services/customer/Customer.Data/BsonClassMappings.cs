@@ -33,16 +33,16 @@ namespace Customers
                 cm.MapIdProperty(c => c.Id);
             });
 
-            BsonClassMap.RegisterClassMap<DomainEvent<Customer>>(cm =>
-            {
-                cm.AutoMap();
-                cm.MapMember(x => x.AggregateType).SetElementName("AggregateType");
-            });
+            //BsonClassMap.RegisterClassMap<NewCustomerCreated>(cm =>
+            //{
+            //    cm.AutoMap();
+            //    cm.MapCreator(x => new NewCustomerCreated(x.Id.ToString(), x.AggregateId, x.CreatedOn, x.HasBeenPublished, x.EventData));
+            //});
 
-            BsonClassMap.RegisterClassMap<NewCustomerCreated>(cm =>
+            BsonClassMap.RegisterClassMap<DomainEvent>(cm =>
             {
                 cm.AutoMap();
-                cm.MapCreator(x => new NewCustomerCreated(x.Id.ToString(), x.AggregateId, x.CreatedOn, x.HasBeenPublished, x.EventData));
+                cm.MapCreator(x => new DomainEvent(x.Id.ToString(), x.AggregateId, x.AggregateType, x.MessageNameSpace, x.CreatedOn, x.HasBeenPublished, x.EventData));
             });
         }
     }

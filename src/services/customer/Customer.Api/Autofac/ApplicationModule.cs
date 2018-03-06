@@ -18,7 +18,6 @@ namespace Customers.Autofac
         {
             builder.RegisterType<CreateCustomerCommandHandler>().As<ICommandHandler<CreateCustomer>>();
             builder.RegisterType<FindCustomerQueryHandler>().As<IQueryHandler<FindCustomerQuery, Customer>>();
-            builder.RegisterType<GetCustomerEventStreamQueryHandler>().As<IQueryHandler<GetCustomerEventStream, IEnumerable<DomainEvent<Customer>>>>();
-        }
+         }
     }
 }

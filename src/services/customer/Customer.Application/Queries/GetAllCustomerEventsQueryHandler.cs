@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Customers.Application.Queries
 {
-    public class GetCustomerEventStreamQueryHandler : IQueryHandler<GetCustomerEventStream, IEnumerable<DomainEvent<Customer>>>
+    public class GetCustomerEventStreamQueryHandler : IQueryHandler<GetCustomerEventStream, IEnumerable<DomainEvent>>
     {
         private readonly IEventStream<Customer> eventStream;
 
@@ -19,7 +19,7 @@ namespace Customers.Application.Queries
             this.eventStream = eventStream;
         }
 
-        public async Task<IEnumerable<DomainEvent<Customer>>> Execute(GetCustomerEventStream query)
+        public async Task<IEnumerable<DomainEvent>> Execute(GetCustomerEventStream query)
         {
             return await eventStream.ReadAll();
         }

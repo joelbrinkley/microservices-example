@@ -22,7 +22,7 @@ namespace Account.Customers
             {
                 try
                 {
-                    var customerResponse = await httpClient.GetAsync($"api/customers/{customerId}");
+                    var customerResponse = await httpClient.GetAsync(baseUrl + $"api/customers/{customerId}");
                     return customerResponse?.TransformToCustomer();
                 }
                 catch (Exception e)

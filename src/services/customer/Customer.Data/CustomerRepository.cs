@@ -1,4 +1,5 @@
-﻿using Logging;
+﻿using EventStore;
+using Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -11,23 +12,25 @@ namespace Customers
     public class CustomerRepository : ICustomerRepository
     {
         private readonly IMongoClient client;
+        private readonly IEventStore eventStore;
         private readonly ILog log;
         private readonly IMongoDatabase mongoDatabase;
         private readonly IMongoCollection<Customer> customerCollection;
-        private readonly IMongoCollection<BsonDocument> eventsCollection;
 
-        public CustomerRepository(IMongoClient client, ILog log)
+        public CustomerRepository(IMongoClient client, IEventStore eventStore, ILog log)
         {
             this.client = client;
+            this.eventStore = eventStore;
             this.log = log;
             this.mongoDatabase = client.GetDatabase("customerDb");
             this.customerCollection = mongoDatabase.GetCollection<Customer>("customers");
-            this.eventsCollection = mongoDatabase.GetCollection<BsonDocument>("events");
         }
 
 
         public async Task AddOrUpdate(Customer customer)
         {
+            //probably need some kind of transaction here
+
             var filter = Builders<Customer>.Filter.Eq("Id", customer.Id);
             var updateId = Builders<Customer>.Update.Set("Id", customer.Id);
             var updateName = Builders<Customer>.Update.Set("Name", customer.Name);
@@ -45,11 +48,11 @@ namespace Customers
 
             try
             {
-                var result = await customerCollection.FindOneAndUpdateAsync(filter, updateDef, options);
+                var events = customer.UncommittedEvents;
 
-                var events = customer.UncommittedEvents.Select(x => x.ToBsonDocument());
+                await this.eventStore.AppendEvents(events, customer.Version);
 
-                this.eventsCollection.InsertMany(events);
+                var result = await customerCollection.FindOneAndUpdateAsync(filter, updateDef, options);           
             }
             catch(Exception e)
             {

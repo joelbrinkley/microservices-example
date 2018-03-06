@@ -10,7 +10,14 @@ namespace Account.Customers
     {
         public static Customer TransformToCustomer(this HttpResponseMessage response)
         {
-            var jobject = new JObject(response.Content);
+            var readTask = response.Content.ReadAsStringAsync();
+
+            readTask.Wait();
+
+            var content = readTask.Result;
+
+            var jobject = JObject.Parse(content);
+
             var customer = new Customer(
                     jobject["name"].ToString(),
                     Convert.ToBoolean(jobject["isPreferredCustomer"]));

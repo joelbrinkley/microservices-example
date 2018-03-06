@@ -12,23 +12,22 @@ namespace Domain.Aggregates
         private long version;
         public long Version => version;
 
-        private List<DomainEvent<T>> uncommitedEvents = new List<DomainEvent<T>>();
+        private List<DomainEvent> uncommitedEvents = new List<DomainEvent>();
 
-        public IEnumerable<DomainEvent<T>> UncommittedEvents => this.uncommitedEvents.AsReadOnly();
+        public IEnumerable<DomainEvent> UncommittedEvents => this.uncommitedEvents.AsReadOnly();
 
         public Aggregate()
         {
 
         }
 
-        protected void Apply(DomainEvent<T> @event)
+        protected void Apply(DomainEvent @event)
         {
             this.ApplyWhen(@event);
-            this.uncommitedEvents.Add(@event);
-            this.version++;
+            this.AddEvent(@event);
         }
 
-        private void ApplyWhen(DomainEvent<T> @event)
+        private void ApplyWhen(DomainEvent @event)
         {
             var allMethods = this.GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance);
             MethodInfo info = allMethods.FirstOrDefault(
@@ -40,7 +39,7 @@ namespace Domain.Aggregates
             info.Invoke(this, new object[] { @event });
         }
 
-        public void LoadFromHistory(IEnumerable<DomainEvent<T>> eventHistory)
+        public void LoadFromHistory(IEnumerable<DomainEvent> eventHistory)
         {
             var orderedEvents = eventHistory.OrderBy(x => x.Version);
 
@@ -52,9 +51,13 @@ namespace Domain.Aggregates
             this.ClearUncommittedEvents();
         }
 
-        public void AddEvent(DomainEvent<T> @event) => this.uncommitedEvents.Add(@event);
+        public void AddEvent(DomainEvent @event)
+        {
+            this.uncommitedEvents.Add(@event);
+            this.version++;
+        }
 
-        public void AddEvents(IEnumerable<DomainEvent<T>> @events)
+        public void AddEvents(IEnumerable<DomainEvent> @events)
         {
             foreach (var @event in @events)
             {

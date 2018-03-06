@@ -16,15 +16,15 @@ namespace MongoEventStore
 
         public MongoEventStore(IMongoClient mongoClient)
         {
-            this.mongoDatabase = mongoClient.GetDatabase("bankAccountDb");
+            this.mongoDatabase = mongoClient.GetDatabase("eventStoreDb");
         }
 
-        public void AddEvent<T>(DomainEvent<T> @event)
+        public void AddEvent(DomainEvent @event)
         {
             throw new NotImplementedException();
         }
 
-        public async Task AppendEvents<T>(IEnumerable<DomainEvent<T>> domainEvents, long exepectedVersion)
+        public async Task AppendEvents(IEnumerable<DomainEvent> domainEvents, long exepectedVersion)
         {
             if (!domainEvents.Any()) return; //return if no events are bassed in
 
@@ -36,33 +36,31 @@ namespace MongoEventStore
             {
                 throw new Exception("Objected out of date");
             }
-
-            var documents = domainEvents.Select(x => x.SerializeEvent());
-
-            await mongoDatabase.GetCollection<BsonDocument>("events").InsertManyAsync(documents);
+            
+            await mongoDatabase.GetCollection<DomainEvent>("events").InsertManyAsync(domainEvents);
         }
 
         public async Task<long> GetLatestVersion(string id)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("AggregateId", id);
+            var filter = Builders<DomainEvent>.Filter.Eq("AggregateId", id);
 
-            var lastEvent = await mongoDatabase.GetCollection<BsonDocument>("events")
+            var lastEvent = await mongoDatabase.GetCollection<DomainEvent>("events")
                     .Find(filter)
                     .Sort("{version:-1}")
                     .FirstOrDefaultAsync();
 
             if (lastEvent == null) return 0;
 
-            return lastEvent["version"].AsInt64;
+            return lastEvent.Version;
         }
 
-        public async Task<IEnumerable<DomainEvent<T>>> ReadEvents<T>(string id)
+        public async Task<IEnumerable<DomainEvent>> ReadEvents(string id)
         {
-            var filter = Builders<BsonDocument>.Filter.Eq("AggregateId", id);
+            var filter = Builders<DomainEvent>.Filter.Eq("AggregateId", id);
 
-            var events = await mongoDatabase.GetCollection<BsonDocument>("events").Find(filter).ToListAsync();
+            var events = await mongoDatabase.GetCollection<DomainEvent>("events").Find(filter).ToListAsync();
 
-            return events.Select(e => e.DeserializeEvent<DomainEvent<T>>());
+            return events;
         }
     }
 }

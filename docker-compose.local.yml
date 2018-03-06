@@ -14,18 +14,6 @@ services:
      - microservice-example-mongo
      - elk
 
-  customer-event-publisher:
-    environment:
-      - MONGODB=mongodb://microservice-example-mongo:27017
-      - MESSAGE_QUEUE_URL=nats://microservice-example-queue:4222
-      - ELK=http://microexample-elk:9200
-    links:
-      - elk
-    depends_on:
-      - microservice-example-mongo
-      - microservice-example-queue
-      - elk
-
   #######################################
   # account services
   #######################################
@@ -51,6 +39,19 @@ services:
       - microservice-example-mongo
       - elk
   
+  account-listener:
+    environment:
+      - MONGODB=mongodb://microservice-example-mongo:27017
+      - MESSAGE_QUEUE_URL=nats://microservice-example-queue:4222
+      - ELK=http://microexample-elk:9200
+      - CUSTOMER_URL=http://customer-service/
+    links:
+      - elk
+    depends_on:
+      - microservice-example-sql
+      - microservice-example-queue
+      - elk
+
   account-view-listener:
     environment:
       - SQL_CONNECTION=Server=microservice-example-sql;Initial Catalog=AccountView;User Id=sa;Password=PWord1!!!;
@@ -98,3 +99,15 @@ services:
       - "5601:5601"
       - "9200:9200"
       - "5044:5044"
+
+  mongo-event-publisher:
+    environment:
+      - MONGODB=mongodb://microservice-example-mongo:27017
+      - MESSAGE_QUEUE_URL=nats://microservice-example-queue:4222
+      - ELK=http://microexample-elk:9200
+    links:
+      - elk
+    depends_on:
+      - microservice-example-mongo
+      - microservice-example-queue
+      - elk

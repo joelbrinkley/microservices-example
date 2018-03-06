@@ -1,4 +1,5 @@
-﻿using NATS.Client;
+﻿using Domain.DomainEvents;
+using NATS.Client;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,8 @@ namespace EventListener
 {
     public interface IProcessEvents
     {
-        void Process(JObject @event);
+        void Process(DomainEvent @event);
         void HandleSubscription(object sender, MsgHandlerEventArgs e);
+        string QueuePrefix { get; }
     }
 }

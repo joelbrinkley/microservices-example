@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Domain.DomainEvents;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,11 @@ namespace EventListener
             var json = JsonConvert.SerializeObject(message);
             return Encoding.UTF8.GetBytes(json);
         }
-        public static JObject Deserializer(byte[] messageData)
+        public static T Deserializer<T>(byte[] messageData)
         {
             var json = Encoding.UTF8.GetString(messageData);
-            var obj = JsonConvert.DeserializeObject<JObject>(json);
+
+            var obj = JsonConvert.DeserializeObject<T>(json);
 
             return obj;
         }

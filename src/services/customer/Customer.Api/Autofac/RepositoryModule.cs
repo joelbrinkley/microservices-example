@@ -3,16 +3,8 @@ using Customers.Events;
 using Customers.Exceptions;
 using Domain;
 using Domain.DomainEvents;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Bson.Serialization.Serializers;
+using EventStore;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Customers
 {
@@ -32,8 +24,8 @@ namespace Customers
             builder.Register(c => new MongoClient(mongoDbConnection)).As<IMongoClient>().SingleInstance(); //thread safe connection
 
             builder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
-
-            builder.RegisterType<EventStream>().As<IEventStream<Customer>>();
+                   
+            builder.RegisterType<MongoEventStore.MongoEventStore>().As<IEventStore>();
 
             BsonClassMappings.Configure();
         }      

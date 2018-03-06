@@ -8,9 +8,9 @@ namespace EventStore
 {
     public interface IEventStore
     {
-        Task<IEnumerable<DomainEvent<T>>> ReadEvents<T>(string aggregateId);
+        Task<IEnumerable<DomainEvent>> ReadEvents(string aggregateId);
 
-        Task AppendEvents<T>(IEnumerable<DomainEvent<T>> domainEvents, long expectedVersion);
+        Task AppendEvents(IEnumerable<DomainEvent> domainEvents, long expectedVersion);
 
         Task<long> GetLatestVersion(string aggregateId);
     }

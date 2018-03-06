@@ -1,0 +1,29 @@
+FROM microsoft/aspnetcore-build:2 as builder
+
+WORKDIR /src/shared/Domain
+COPY /src/shared/Domain/Domain.csproj .
+RUN dotnet restore
+
+WORKDIR /src/shared/MongoEventStore
+COPY /src/shared/MongoEventStore/MongoEventStore.csproj .
+RUN dotnet restore
+
+WORKDIR /src/shared/MongoEventStorePublisher
+COPY /src/shared/MongoEventStorePublisher/MongoEventStorePublisher.csproj .
+RUN dotnet restore
+
+COPY /src/shared/Domain/ /src/shared/Domain/
+COPY /src/shared/Logging/ /src/shared/Logging/
+COPY /src/shared/MongoEventStore/ /src/shared/MongoEventStore/
+COPY /src/shared/MongoEventStorePublisher/ /src/shared/MongoEventStorePublisher/
+
+WORKDIR /src/shared/MongoEventStorePublisher/
+RUN dotnet publish -c Release -o /build 
+
+FROM microsoft/aspnetcore:2.0
+
+WORKDIR /app
+
+COPY --from=builder /build .
+
+ENTRYPOINT [ "dotnet", "MongoEventStorePublisher.dll" ]

@@ -7,11 +7,7 @@ services:
     build:
       context: ./
       dockerfile: ./docker/CustomerService/dockerfile
-  customer-event-publisher:
-    build:
-      context: ./
-      dockerfile: ./docker/CustomerEventPublisher/dockerfile
-
+ 
   #######################################
   # account services
   #######################################
@@ -29,6 +25,11 @@ services:
     build:
       context: ./
       dockerfile: ./docker/AccountViewListener/dockerfile
+  
+  account-listener:
+    build:
+      context: ./
+      dockerfile: ./docker/AccountListener/dockerfile
 
   #######################################
   # client services
@@ -46,6 +47,10 @@ services:
       context: ./
       dockerfile: ./docker/Nginx/dockerfile
 
+  mongo-event-publisher:
+    build:
+      context: ./
+      dockerfile: ./docker/MongoEventPublisher/dockerfile
  
 
 

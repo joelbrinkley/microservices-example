@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Account.Events
 {
-    public class AccountDebited : DomainEvent<BankAccount>
+    public class AccountDebited : DomainEvent
     {
         public const string EVENT_NAMESPACE = "Account.MoneyWithdrawn";
 
         public AccountDebited(Guid bankAccountId, decimal DebitAmount) 
-            : base(bankAccountId.ToString(), EVENT_NAMESPACE)
+            : base(bankAccountId.ToString(), typeof(BankAccount).ToString(), EVENT_NAMESPACE)
         {
             this.DebitAmount = DebitAmount;
         }

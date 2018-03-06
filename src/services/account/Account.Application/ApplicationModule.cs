@@ -9,9 +9,9 @@ namespace Account.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<DebitAccountHandler>().As<ICommandHandler<CreditAccount>>();
+            builder.RegisterType<CreditAccountHandler>().As<ICommandHandler<CreditAccount>>();
             builder.RegisterType<CreateAccountHandler>().As<ICommandHandler<CreateAccount>>();
-            builder.RegisterType<CreditAccountHandler>().As<ICommandHandler<DebitAccount>>();
+            builder.RegisterType<DebitAccountHandler>().As<ICommandHandler<DebitAccount>>();
                         
         }
     }

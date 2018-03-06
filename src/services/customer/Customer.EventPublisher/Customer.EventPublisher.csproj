@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\shared\Domain\Domain.csproj" />
     <ProjectReference Include="..\..\..\shared\Logging\Logging.csproj" />
+    <ProjectReference Include="..\..\..\shared\MongoEventStore\MongoEventStore.csproj" />
     <ProjectReference Include="..\Customer.Core\Customer.Core.csproj" />
     <ProjectReference Include="..\Customer.Data\Customer.Data.csproj" />
   </ItemGroup>

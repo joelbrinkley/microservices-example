@@ -54,7 +54,7 @@ namespace Account.UnitTests
 
         private BankAccount NewAccountWithBalance(decimal amount)
         {
-            var events = new List<DomainEvent<BankAccount>>()
+            var events = new List<DomainEvent>()
             {
                 new AccountCreated(Guid.NewGuid(), customerId, amount)
             };
@@ -71,7 +71,7 @@ namespace Account.UnitTests
         {
             var bankAccountId = Guid.NewGuid();
 
-            var events = new List<DomainEvent<BankAccount>>()
+            var events = new List<DomainEvent>()
             {
                 new AccountCreated(bankAccountId, customerId, 100),
                 new AccountDebited(bankAccountId, 50),

@@ -1,5 +1,4 @@
-﻿using Logging;
-using Domain.DomainEvents;
+﻿using Domain.DomainEvents;
 using Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -11,17 +10,19 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace Customers.EventPublisher
+namespace MongoEventStorePublisher
 {
-    public class PublisherService<T>
+    public class PublisherService
     {
         private readonly IMongoClient mongoClient;
+        private readonly string natsConnection;
         private readonly ILog log;
         private bool running = false;
 
-        public PublisherService(IMongoClient mongoClient, ILog log)
+        public PublisherService(IMongoClient mongoClient, string natsConnection, ILog log)
         {
             this.mongoClient = mongoClient;
+            this.natsConnection = natsConnection;
             this.log = log;
         }
 
@@ -47,11 +48,11 @@ namespace Customers.EventPublisher
             this.log.Information("Stopping event processor");
         }
 
-        public IEnumerable<DomainEvent<T>> GetAllUnprocessedEvents()
+        public IEnumerable<DomainEvent> GetAllUnprocessedEvents()
         {
-            var eventCollection = mongoClient.GetDatabase("customerDb").GetCollection<DomainEvent<T>>("events");
+            var eventCollection = mongoClient.GetDatabase("eventStoreDb").GetCollection<DomainEvent>("events");
 
-            var filter = Builders<DomainEvent<T>>.Filter.Where(x => x.HasBeenPublished == false);
+            var filter = Builders<DomainEvent>.Filter.Eq("HasBeenPublished", false);
 
             var unpublishedEvents = eventCollection.Find(filter).ToList();
 
@@ -59,41 +60,40 @@ namespace Customers.EventPublisher
 
         }
 
-        public void MarkEventsAsProcessed(IEnumerable<DomainEvent<T>> events)
+        public void MarkEventsAsProcessed(IEnumerable<DomainEvent> events)
         {
             if (!events.Any()) return;
-            var eventCollection = mongoClient.GetDatabase("customerDb").GetCollection<DomainEvent<T>>("events");
+            var eventCollection = mongoClient.GetDatabase("eventStoreDb").GetCollection<DomainEvent>("events");
 
-            var filter = Builders<DomainEvent<T>>.Filter.In(x => x.Id, events.Where(x => x.HasBeenPublished).Select(x => x.Id));
-            var updateIsPublished = Builders<DomainEvent<T>>.Update.Set(x => x.HasBeenPublished, true);
-            var updatePublishedOn = Builders<DomainEvent<T>>.Update.Set(x => x.PublishedOn, DateTime.UtcNow);
-            var update = Builders<DomainEvent<T>>.Update.Combine(updateIsPublished, updatePublishedOn);
+            var ids = events.Where(x => x.HasBeenPublished)
+                            .Select(x => x.Id)
+                            .ToList();
+
+            var filter = Builders<DomainEvent>.Filter.In("Id", ids);
+            var updateIsPublished = Builders<DomainEvent>.Update.Set("HasBeenPublished", true);
+            var updatePublishedOn = Builders<DomainEvent>.Update.Set("PublishedOn", DateTime.UtcNow);
+            var update = Builders<DomainEvent>.Update.Combine(updateIsPublished, updatePublishedOn);
 
             eventCollection.UpdateMany(filter, update);
 
             this.log.Information($"Marked events as published.");
         }
 
-        public void PublishEvents(IEnumerable<DomainEvent<T>> events)
+        public void PublishEvents(IEnumerable<DomainEvent> events)
         {
-            if (!events.Any()) return;
-
-
-
-            using (var connection = new ConnectionFactory().CreateConnection(Config.BROKER_URL))
+            using (var connection = new ConnectionFactory().CreateConnection(natsConnection))
             {
                 foreach (var @event in events)
                 {
                     try
                     {
                         var jsonPayload = JsonConvert.SerializeObject(@event);
-                        connection.Publish(@event.MessageNameSpace, Encoding.UTF8.GetBytes(jsonPayload));
+
+                        connection.Publish(@event.MessageNameSpace.ToString(), Encoding.UTF8.GetBytes(jsonPayload));
 
                         this.log.Information($"Published: {jsonPayload}");
 
                         @event.MarkPublished();
-
-
                     }
                     catch (Exception e)
                     {

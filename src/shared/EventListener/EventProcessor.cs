@@ -23,7 +23,7 @@ namespace EventListener
             this.log = log;
             this.subscriptions = new List<IAsyncSubscription>();
         }
-        
+
         public void Connect()
         {
             connection = new ConnectionFactory().CreateConnection(brokerUrl);
@@ -54,7 +54,7 @@ namespace EventListener
 
         public void Subscribe(string topicName, IProcessEvents eventProcessor)
         {
-            var queueName = $"Account.View.{topicName}";
+            var queueName = $"{eventProcessor.QueuePrefix}.{topicName}";
 
             var subscription = connection.SubscribeAsync(topicName, queueName);
 

@@ -8,10 +8,6 @@ services:
     image: microexample/customer-service:v1
     container_name: customer-service
 
-  customer-event-publisher:
-    image: microexample/customer-event-pubisher:v1
-    container_name: customer-event-publisher
-
   #######################################
   # account services
   #######################################
@@ -22,6 +18,10 @@ services:
   account-view-service:
     image: microexample/account-view-service:v1
     container_name: account-view-service
+
+  account-listener:
+    image: microexample/account-listener:v1
+    container_name: account-listener
 
   account-view-listener:
     image: microexample/account-view-listener:v1
@@ -52,5 +52,9 @@ services:
   microservice-example-proxy:
     image: microexample/reverseproxy
     container_name: microservice-example-proxy
+
+  mongo-event-publisher:
+    image: microexample/mongo-event-publisher:v1
+    container_name: mongo-event-publisher
   
     

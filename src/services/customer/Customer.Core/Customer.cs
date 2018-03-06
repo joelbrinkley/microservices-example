@@ -29,7 +29,7 @@ namespace Customers
             };
 
             customer.AddEvent(new NewCustomerCreated(customer));
-
+           
             return customer;
         }
     }

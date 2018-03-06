@@ -1,0 +1,58 @@
+FROM microsoft/aspnetcore-build:2 as builder
+
+WORKDIR /src/shared/Domain
+COPY /src/shared/Domain/Domain.csproj .
+RUN dotnet restore
+
+WORKDIR /src/shared/Logging
+COPY /src/shared/Logging/Logging.csproj .
+RUN dotnet restore
+
+WORKDIR /src/shared/EventListener
+COPY /src/shared/EventListener/EventListener.csproj .
+RUN dotnet restore
+
+WORKDIR /src/shared/MongoEventStore
+COPY /src/shared/MongoEventStore/MongoEventStore.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Core
+COPY /src/services/account/Account.Core/Account.Core.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Data
+COPY /src/services/account/Account.Data/Account.Data.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Proxies
+COPY /src/services/account/Account.Proxies/Account.Proxies.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Application
+COPY /src/services/account/Account.Application/Account.Application.csproj .
+RUN dotnet restore
+
+WORKDIR /src/services/account/Account.Listener
+COPY /src/services/account/AccountListener/AccountListener.csproj .
+RUN dotnet restore
+
+COPY /src/shared/Domain/ /src/shared/Domain/
+COPY /src/shared/Logging/ /src/shared/Logging/
+COPY /src/shared/EventListener/ /src/shared/EventListener/
+COPY /src/shared/MongoEventStore/ /src/shared/MongoEventStore/
+COPY /src/services/account/Account.Core/ /src/services/account/Account.Core/
+COPY /src/services/account/Account.Data/ /src/services/account/Account.Data/
+COPY /src/services/account/Account.Proxies/ /src/services/account/Account.Proxies/
+COPY /src/services/account/Account.Application/ /src/services/account/Account.Application/
+COPY /src/services/account/AccountListener/ /src/services/account/AccountListener/
+
+WORKDIR /src/services/account/AccountListener
+RUN dotnet publish -c Release -o /build 
+
+FROM microsoft/aspnetcore:2.0
+
+WORKDIR /app
+
+COPY --from=builder /build .
+
+ENTRYPOINT [ "dotnet", "AccountListener.dll" ]
