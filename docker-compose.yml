@@ -28,6 +28,13 @@ services:
     #container_name: account-view-listener removing container name to allow docker to use --scale
 
   #######################################
+  # identity services
+  #######################################
+  identity-service:
+    image: microexample/identity-service:v1
+    container_name: identity-service
+
+  #######################################
   # client services
   #######################################
   account-client:

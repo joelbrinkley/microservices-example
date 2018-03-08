@@ -17,7 +17,7 @@ using Identity.Api.Services;
 namespace Identity.Api.Controllers
 {
     [Authorize]
-    [Route("[controller]/[action]")]
+    [Route("identity/[controller]/[action]")]
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -13,6 +13,7 @@ using Identity.Api.Models;
 using Identity.Api.Services;
 using IdentityServer4.Services;
 using System.Reflection;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Identity.Api
 {
@@ -78,7 +79,7 @@ namespace Identity.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsEnvironment("Debug"))
+            if (env.IsEnvironment("Debug") || env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
@@ -90,6 +91,11 @@ namespace Identity.Api
             }
 
             app.UseStaticFiles();
+            
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
 
@@ -97,7 +103,7 @@ namespace Identity.Api
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "identity/{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseIdentityServer();

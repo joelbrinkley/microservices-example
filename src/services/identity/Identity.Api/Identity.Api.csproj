@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Certificate\microexample-identity.pfx" />
+    <EmbeddedResource Include="Certificate\localhost.pfx" />
   </ItemGroup>
   
 </Project>

@@ -32,6 +32,14 @@ services:
       dockerfile: ./docker/AccountListener/dockerfile
 
   #######################################
+  # identity services
+  #######################################
+  identity-service:
+    build:
+      context: ./
+      dockerfile: ./docker/Identity/dockerfile
+      
+  #######################################
   # client services
   #######################################
   account-client:

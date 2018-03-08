@@ -1,0 +1,24 @@
+FROM microsoft/aspnetcore-build:2 as builder
+
+WORKDIR /src/shared/Logging
+COPY /src/shared/Logging/Logging.csproj .
+RUN dotnet restore
+
+
+WORKDIR /src/services/identity/Identity.Api
+COPY /src/services/identity/Identity.Api/Identity.Api.csproj .
+RUN dotnet restore
+
+COPY /src/shared/Logging/ /src/shared/Logging/
+COPY /src/services/identity/Identity.Api/ /src/services/identity/Identity.Api/
+
+WORKDIR /src/services/identity/Identity.Api
+RUN dotnet publish -c Release -o /build 
+
+FROM microsoft/aspnetcore:2.0
+
+WORKDIR /app
+
+COPY --from=builder /build .
+
+ENTRYPOINT [ "dotnet", "Identity.Api.dll" ]

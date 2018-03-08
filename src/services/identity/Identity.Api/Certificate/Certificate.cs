@@ -20,7 +20,7 @@ namespace Identity.Api.Certificate
              *  real environment the certificate should be created and stored in a secure way, which is out
              *  of the scope of this project.
              **********************************************************************************************/
-            using (var stream = assembly.GetManifestResourceStream("Identity.Api.Certificate.microexample-identity.pfx"))
+            using (var stream = assembly.GetManifestResourceStream("Identity.Api.Certificate.localhost.pfx"))
             {
                 return new X509Certificate2(ReadStream(stream), "PWord1!!!");
             }

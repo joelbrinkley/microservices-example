@@ -63,14 +63,27 @@ services:
       - microservice-example-sql
       - microservice-example-queue
       - elk
-
+      
+  #######################################
+  # identity services
+  #######################################
+  identity-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5566:80"
+    links:
+      - elk
+    depends_on:
+      - microservice-example-sql
+      - elk
   #######################################
   # infrastructure services
   #######################################   
   microservice-example-proxy:
     ports:
-      - "9885:80"
-      - "9887:433"
+     # - "9885:80"
+      - "9887:443"
     depends_on:
       - customer-service
       - account-service

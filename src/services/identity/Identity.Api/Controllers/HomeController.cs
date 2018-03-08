@@ -8,6 +8,7 @@ using Identity.Api.Models;
 
 namespace Identity.Api.Controllers
 {
+
     public class HomeController : Controller
     {
         public IActionResult Index()
