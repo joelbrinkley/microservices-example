@@ -1,3 +1,18 @@
 {
-    "baseUrl": "http://localhost:9885/"
+    "baseUrl": "https://localhost:9887/",
+    "stsServer": "http://localhost:65305/",
+    "redirect_url": "http://localhost:3000/",
+    "client_id": "AngularClient",
+    "response_type": "id_token token",
+    "scope": "account-view account customer account-client openid",
+    "post_logout_redirect_uri": "http://localhost:3000/",
+    "start_checksession": true,
+    "silent_renew": true,
+    "forbidden_route": "/forbidden",
+    "unauthorized_route": "/unauthorized",
+    "log_console_warning_active": true,
+    "log_console_debug_active": true,
+    "authorization_endpoint": "https://localhost:9887/auth/connect/authorize",
+    "token_endpoint": "https://localhost:9887/auth/connect/token",
+    "end_session_endpoint": "https://localhost:9887/auth/connect/endsession"
 }

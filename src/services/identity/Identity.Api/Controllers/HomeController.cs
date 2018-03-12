@@ -8,7 +8,7 @@ using Identity.Api.Models;
 
 namespace Identity.Api.Controllers
 {
-
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         public IActionResult Index()

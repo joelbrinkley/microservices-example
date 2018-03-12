@@ -13,28 +13,40 @@ using Microsoft.Extensions.Options;
 using Identity.Api.Models;
 using Identity.Api.Models.AccountViewModels;
 using Identity.Api.Services;
+using IdentityServer4.Stores;
+using IdentityServer4.Services;
+using System.Globalization;
 
 namespace Identity.Api.Controllers
 {
     [Authorize]
-    [Route("identity/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IIdentityServerInteractionService _interaction;
+        private readonly IClientStore _clientStore;
+        private readonly IPersistedGrantService _persistedGrantService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
+            IPersistedGrantService persistedGrantService,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILoggerFactory loggerFactory,
+            IIdentityServerInteractionService interaction,
+            IClientStore clientStore)
         {
             _userManager = userManager;
+            _persistedGrantService = persistedGrantService;
             _signInManager = signInManager;
             _emailSender = emailSender;
-            _logger = logger;
+            _logger = loggerFactory.CreateLogger<AccountController>();
+            _interaction = interaction;
+            _clientStore = clientStore;
         }
 
         [TempData]
@@ -241,13 +253,39 @@ namespace Identity.Api.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Logout(string logoutId)
+        {
+            var item = CultureInfo.CurrentCulture;
+            var item2 = CultureInfo.CurrentUICulture;
+
+            var context = await _interaction.GetLogoutContextAsync(logoutId);
+            
+            if (User.Identity.IsAuthenticated == false)
+            {
+                // if the user is not authenticated, then just show logged out page
+                return await Logout();
+            }
+
+            if (context?.ShowSignoutPrompt == false)
+            {
+                // it's safe to automatically sign-out
+                return await Logout();
+            }
+           
+            // show the logout prompt. this prevents attacks where the user
+            // is automatically signed out by another malicious web page.
+            return await Logout();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
+            await this.HttpContext.SignOutAsync();
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Login");
         }
 
         [HttpPost]

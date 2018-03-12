@@ -22,17 +22,17 @@ namespace Identity.Api.Data
 
             if (!await context.Clients.AnyAsync())
             {
-                context.Clients.AddRange(Config.GetClients(clientUrls).Select(client => client.ToEntity()));
+                context.Clients.AddRange(IdentityServiceConfiguration.GetClients(clientUrls).Select(client => client.ToEntity()));
             }
 
             if (!await context.IdentityResources.AnyAsync())
             {
-                context.IdentityResources.AddRange(Config.GetResources().Select(resource => resource.ToEntity()));
+                context.IdentityResources.AddRange(IdentityServiceConfiguration.GetResources().Select(resource => resource.ToEntity()));
             }
 
             if (!await context.ApiResources.AnyAsync())
             {
-                context.ApiResources.AddRange(Config.GetApis().Select(api => api.ToEntity()));
+                context.ApiResources.AddRange(IdentityServiceConfiguration.GetApis().Select(api => api.ToEntity()));
             }
 
             await context.SaveChangesAsync();

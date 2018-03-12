@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,14 @@ using static IdentityServer4.Models.IdentityResources;
 
 namespace Identity.Api.Configuration
 {
-    public class Config
+    public class IdentityServiceConfiguration
     {
         // ApiResources define the apis in your system
         public static IEnumerable<ApiResource> GetApis()
         {
             return new List<ApiResource>
             {
+                new ApiResource("account-client"),
                 new ApiResource("account", "Account Service"),
                 new ApiResource("customer", "Customer Service"),
                 new ApiResource("account-view", "Account View Service")
@@ -33,12 +35,30 @@ namespace Identity.Api.Configuration
 
         public static IEnumerable<Client> GetClients(Dictionary<string, string> clientsUrl)
         {
-            var clientList = new List<Client>();
-
-            //clientList.Add(new Client()
-            //{
-
-            //});
+            var clientList = new List<Client>()
+            {
+                new Client
+                {
+                    ClientId = "AngularClient",
+                    ClientName = "AngularClient",
+                    AccessTokenType = AccessTokenType.Jwt,
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RedirectUris = { $"{clientsUrl["AngularClient"]}/" },
+                    RequireConsent = false,
+                    PostLogoutRedirectUris = { $"{clientsUrl["AngularClient"]}/" },
+                    AllowedCorsOrigins = { $"{clientsUrl["AngularClient"]}" },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "account-client",
+                        "account",
+                        "customer",
+                        "account-view"
+                    }
+                }
+            };
 
             return clientList;
         }

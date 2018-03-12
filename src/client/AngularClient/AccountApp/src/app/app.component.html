@@ -5,4 +5,10 @@
   </h1>
 
 </div>
-<router-outlet></router-outlet>
+<div *ngIf="!authService.isAuthorized">
+  You are not authorized
+</div>
+<div *ngIf="authService.isAuthorized">
+  <button (click)="logout()">logout</button>
+  <router-outlet></router-outlet>
+</div>

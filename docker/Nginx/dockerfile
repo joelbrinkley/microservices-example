@@ -1,9 +1,11 @@
 FROM nginx
 
+
+
 COPY /nginx/nginx.conf /etc/nginx/nginx.conf
 COPY /nginx/localhost.key /etc/ssl/private/
 COPY /nginx/localhost.crt /etc/ssl/certs/
 COPY /nginx/mime.types /etc/nginx/
 CMD ["nginx", "-g", "daemon off;"]
-
+#CMD ["bash"]
 
